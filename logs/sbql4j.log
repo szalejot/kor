@@ -1,0 +1,28 @@
+2013-09-29 22:52:41,157 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-09-29 22:52:41,167 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] persons where getAddress().getCity() == c
+2013-09-29 22:52:41,178 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-09-29 22:52:41,178 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] persons where getAddress().getCity() == c
+2013-09-29 22:52:41,187 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-09-29 22:52:41,187 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] persons where getAddress().getCity() == c
+2013-09-29 22:52:41,228 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after db4o index optimization: 
+2013-09-29 22:52:41,228 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] persons where getAddress().getCity() == c
+2013-09-29 22:52:41,239 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-09-29 22:52:41,240 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] firms where getAddress().getCity() == c
+2013-09-29 22:52:41,245 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-09-29 22:52:41,246 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] firms where getAddress().getCity() == c
+2013-09-29 22:52:41,250 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-09-29 22:52:41,250 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] firms where getAddress().getCity() == c
+2013-09-29 22:52:41,257 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after db4o index optimization: 
+2013-09-29 22:52:41,257 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] firms where getAddress().getCity() == c
+2013-09-29 22:52:41,283 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-09-29 22:52:41,283 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
+2013-09-29 22:52:41,285 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-09-29 22:52:41,286 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
+2013-09-29 22:52:41,287 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-09-29 22:52:41,288 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
+2013-09-29 22:52:41,292 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after db4o index optimization: 
+2013-09-29 22:52:41,293 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
+2013-09-29 22:52:41,309 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Sucessfully preprocessed task
+2013-09-29 22:52:41,412 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Creating java file: /home/michal/workspace/KOR_s10740_s10757/dist/edu/pjwstk/jps/ExampleData.java
+2013-09-29 22:52:41,584 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Creating java file: /home/michal/workspace/KOR_s10740_s10757/dist/edu/pjwstk/jps/JPSQueries1.java
+2013-09-29 22:52:41,608 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Sucessfully writed 2 files

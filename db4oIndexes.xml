@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db4oIndexMetadata>
+  <indexEntry>
+    <indexedClass>pl.wcislo.sbql4j.examples.model.linq.Customer</indexedClass>
+    <field>city</field>
+  </indexEntry>
+  <indexEntry>
+    <indexedClass>pl.wcislo.sbql4j.examples.model.linq.Product</indexedClass>
+    <field>productName</field>
+  </indexEntry>
+  <indexEntry>
+    <indexedClass>pl.wcislo.sbql4j.java.test.model.Employee</indexedClass>
+    <field>salary</field>
+  </indexEntry>
+  <indexEntry>
+    <indexedClass>pl.wcislo.sbql4j.examples.model.advanced.Employee</indexedClass>
+    <field>salary</field>
+  </indexEntry>
+  
+</db4oIndexMetadata>
+
