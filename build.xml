@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="SBQL4J Examples" default="SBQL4J_precompile">
+	<property name="SOURCE_DIR" value="src"/>
+	<property name="DEST_DIR" value="dist"/>
+
+	<property name="SBQL4J_LIB" value="sbql4j_0.95_xml.jar" />
+	<property name="DB4O_SBQL4J_LIB" value="db4o_sbql4j_20111011.jar" />
+		
+	<!--
+	<property name="SYSTEM_CLASSPATH" value="config;lib/${SBQL4J_LIB};lib/${DB4O_SBQL4J_LIB}"/>
+	<property name="CLASSPATH" value="bin;${SYSTEM_CLASSPATH}"/>
+	-->
+	<property name="CLASSPATH" value="bin;config;lib/${SBQL4J_LIB};lib/${DB4O_SBQL4J_LIB}"/>
+	
+	<target name="declare">
+		<taskdef name="sbql_pre" 
+			classname="pl.wcislo.sbql4j.java.preprocessor.ant.SBQL4JAntTask"
+			classpath="${CLASSPATH};">
+		</taskdef>
+		<taskdef name="gatherDb4oMetadata" 
+			classname="pl.wcislo.sbql4j.java.preprocessor.ant.GatherDb4oMetadataAntTask"
+			classpath="${CLASSPATH};">
+		</taskdef>
+	</target>
+	
+	<target name="prepare" depends="declare">
+		<delete dir="${DEST_DIR}"/>
+		<mkdir dir="${DEST_DIR}"/>
+	</target>
+	
+	<target name="SBQL4J_precompile" depends="declare">
+		<sbql_pre
+			sourcedir="${SOURCE_DIR}"
+			destdir="${DEST_DIR}"
+			classpath="${CLASSPATH}"
+			codeGenType="NO_STACKS"
+			printExpressionTrace="false"
+			printQueryPretty="true"
+			optimiseDeadQueries="true"
+			optimiseIndependentQueries="true"
+			optimiseDb4oIndexes="true"
+			db4oMetabase="db4oIndexes.xml">
+		</sbql_pre>
+<!-- 
+	try also
+	codeGenType="INTERPRETER" - queries are parsed at runtime and run by interpreter
+	codeGenType="SIMPLE" - generates simple code equal to interpreter
+	codeGenType="NO_QRES" - generates simple code similar to interpeter, but no QRES stack and with some optimizations
+	codeGenType="NO_STACKS" - generates pure java code (still experimental)
+-->
+	</target>
+	<target name="db4oMetadata" depends="declare">
+		<gatherDb4oMetadata
+			destfile="db4oIndexes.xml"
+			dbfile="testIndexed.db">
+		</gatherDb4oMetadata>
+	</target>
+</project>
