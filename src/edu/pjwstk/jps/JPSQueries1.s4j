@@ -1,7 +1,7 @@
 package edu.pjwstk.jps;
 
 import java.util.List;
-
+//Próba pusha by r.gulbas
 import pl.wcislo.sbql4j.java.model.runtime.Struct;
 import edu.pjwstk.jps.model.*;
 
