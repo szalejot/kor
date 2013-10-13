@@ -3,12 +3,12 @@ package edu.pjwstk.jps.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class RenCar {
+public class RentCar {
     private Labor labor;
     private Car car;
     private Date date;
 
-    public RenCar(Labor labor, Car car, Date date) {
+    public RentCar(Labor labor, Car car, Date date) {
         this.labor = labor;
         this.car = car;
         this.date = date;

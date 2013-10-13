@@ -12,16 +12,18 @@ public class Labor {
     private Double salary;
     private Date workSince;
     private Title hasTitle;
+    private Date hasTitleSince;
     private Company worksAt;
 
     public Labor(String fName, String lName, Date birthDate, Boolean sex, Company worksAt, Title hasTitle,
-            Double salary, Date workSince) {
+            Double salary,Date hasTitleSince, Date workSince) {
         super();
         this.fName = fName;
         this.lName = lName;
         this.birthDate = birthDate;
         this.sex = sex;
         this.hasTitle = hasTitle;
+        this.hasTitleSince=hasTitleSince;
         this.salary = salary;
         this.workSince = workSince;
         this.worksAt = worksAt;
@@ -77,6 +79,14 @@ public class Labor {
 
     public Date getBirthDate() {
         return birthDate;
+    }
+
+    public Date getHasTitleSince() {
+        return hasTitleSince;
+    }
+
+    public void setHasTitleSince(Date hasTitleSince) {
+        this.hasTitleSince = hasTitleSince;
     }
 
     @Override
