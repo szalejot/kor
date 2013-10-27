@@ -2,9 +2,9 @@ package edu.pjwstk.jps.model;
 
 public class CompanyBranch {
     private String name;
-
-    public CompanyBranch() {
-        super();
+    
+    public CompanyBranch(String name) {
+        this.name = name;
     }
 
     @Override
@@ -12,11 +12,11 @@ public class CompanyBranch {
         return "CompanyBranch [name=" + name + "]";
     }
 
-    public void addCompanyBranch(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getCompanyBranch() {
+    public String getName() {
         return this.name;
     }
 }
