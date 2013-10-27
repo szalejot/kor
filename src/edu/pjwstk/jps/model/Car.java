@@ -5,31 +5,31 @@ import java.util.Date;
 public class Car {
     private Integer nr;
     private String manufacturer;
-    private String model;
+    private String type;
     private String color;
-    private Date yearOfProd;
+    private Date prodDate;
     private Company owner;
     
-    public Car(Integer nr, String manufacturer, String model, String color, Date year, Company owner) {
+    public Car(Integer nr, String manufacturer, String type, String color, Date prodDate, Company owner) {
         this.nr=nr;
         this.manufacturer = manufacturer;
-        this.model = model;
+        this.type = type;
         this.color = color;
-        this.yearOfProd = year;
+        this.prodDate = prodDate;
         this.owner=owner;
     }
 
     @Override
     public String toString() {
-        return "Car[model=" + model + ", color=" + color  + ", year=" + yearOfProd + "]";
+        return "Car[model=" + type + ", color=" + color  + ", year=" + prodDate + "]";
     }
 
-    public String getModel() {
-        return model;
+    public String getType() {
+        return type;
     }
 
-    public void setModel(String model) {
-        this.model = model;
+    public void setType(String model) {
+        this.type = model;
     }
 
     public String getColor() {
@@ -40,12 +40,12 @@ public class Car {
         this.color = color;
     }
 
-    public Date getYear() {
-        return yearOfProd;
+    public Date getProdDate() {
+        return prodDate;
     }
 
-    public void setYear(Date year) {
-        this.yearOfProd = year;
+    public void setProdDate(Date prodDate) {
+        this.prodDate = prodDate;
     }
 
     public Integer getNr() {

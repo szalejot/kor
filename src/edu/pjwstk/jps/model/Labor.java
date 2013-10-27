@@ -8,14 +8,14 @@ public class Labor {
     private String fName;
     private String lName;
     private Date birthDate;
-    private Boolean sex;
+    private Character sex; // M or F
     private Double salary;
     private Date workSince;
     private Title hasTitle;
     private Date hasTitleSince;
     private Company worksAt;
 
-    public Labor(String fName, String lName, Date birthDate, Boolean sex, Company worksAt, Title hasTitle,
+    public Labor(String fName, String lName, Date birthDate, Character sex, Company worksAt, Title hasTitle,
             Double salary,Date hasTitleSince, Date workSince) {
         super();
         this.fName = fName;
@@ -69,7 +69,7 @@ public class Labor {
         this.worksAt = worksAt;
     }
 
-    public Boolean getSex() {
+    public Character getSex() {
         return sex;
     }
 
