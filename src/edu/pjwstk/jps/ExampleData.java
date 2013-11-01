@@ -20,6 +20,7 @@ public class ExampleData {
     
     private static int NUM_OF_LABOR_PER_COMP = 30;
     private static int NUM_OF_CARS_PER_COMP = 10;
+    private static int NUM_OF_RENTS_PER_COMP = 10000;
 
     private List<Car> cars;
     private List<Company> companies;
@@ -78,15 +79,70 @@ public class ExampleData {
 
     private void initData() {
         cars = new ArrayList<Car>();
-        companies = new ArrayList<Company>();
         companyBranches = initBranches();
         labors = new ArrayList<Labor>();
         rentCars = new ArrayList<RentCar>();
         titles = initTitles();
+        companies = initCompanies(0, null, 3);
         trainingCompanies = initTrainingCompanies();
         trainingProducts = initTrainingProducts();
         trainings = initTrainings();
-        trainingAssignments = new ArrayList<TrainingAssignment>();
+        trainingAssignments = initTrainingAssignments();
+    }
+    
+    private List<TrainingAssignment> initTrainingAssignments() {
+        List <TrainingAssignment> result = new ArrayList<TrainingAssignment>();
+        
+        int numOfTrainings = labors.size() * 5;
+        long milisInDay = 24 * 3600 * 1000;
+        Date today = new Date();
+        Random rand = new Random();
+        for (int i = 0; i < numOfTrainings; i++) {
+            Labor labor = labors.get(rand.nextInt(labors.size() - 1));
+            Training training = trainings.get(rand.nextInt(trainings.size() - 1));
+            Date date = new Date(today.getTime() - milisInDay * rand.nextInt(365));
+            result.add(new TrainingAssignment(labor, training, date));
+        }
+        
+        return result;
+    }
+    
+    private List<Company> initCompanies(int lvl, Company parent, int branchesPerLevel) {
+        List<Company> result = new ArrayList<Company>();
+        
+        Random rand = new Random();
+        String name = companyBranches.get(lvl).getName() + " nr " + rand.nextInt(1000);
+        
+        Company comp = new Company(name, parent, companyBranches.get(lvl));
+        if (parent == null) {
+            comp.setPartOf(comp);
+        }
+        result.add(comp);
+        
+        List<Car> compCars = initCarsPerCompany(comp);
+        List<Labor> compLabor = initLaborsPerCompany(comp);
+        
+        Labor director = compLabor.get(0);
+        director.setTitle(titles.get(0));
+        labors.addAll(compLabor);
+        cars.addAll(compCars);
+        
+        long milisInDay = 24 * 3600 * 1000;
+        Date today = new Date();
+        for (int i = 0; i < NUM_OF_RENTS_PER_COMP; i++) {
+            Labor labor = compLabor.get(rand.nextInt(compLabor.size() - 1));
+            Car car = compCars.get(rand.nextInt(compCars.size() - 1));
+            Date date = new Date(today.getTime() - milisInDay * rand.nextInt(365));
+            rentCars.add(new RentCar(labor, car, date));
+        }
+        
+        if (lvl < companyBranches.size() - 1) {
+            for (int i = 0; i < branchesPerLevel; i++) {
+                result.addAll(initCompanies(lvl + 1, comp, branchesPerLevel));
+            }
+        }
+        
+        return result;
     }
     
     private List<CompanyBranch> initBranches() {

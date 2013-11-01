@@ -11,18 +11,18 @@ public class Labor {
     private Character sex; // M or F
     private Double salary;
     private Date workSince;
-    private Title hasTitle;
+    private Title title;
     private Date hasTitleSince;
     private Company worksAt;
 
-    public Labor(String fName, String lName, Date birthDate, Character sex, Company worksAt, Title hasTitle,
+    public Labor(String fName, String lName, Date birthDate, Character sex, Company worksAt, Title title,
             Double salary,Date hasTitleSince, Date workSince) {
         super();
         this.fName = fName;
         this.lName = lName;
         this.birthDate = birthDate;
         this.sex = sex;
-        this.hasTitle = hasTitle;
+        this.title = title;
         this.hasTitleSince=hasTitleSince;
         this.salary = salary;
         this.workSince = workSince;
@@ -53,12 +53,12 @@ public class Labor {
         this.salary = salary;
     }
 
-    public Title getHasTitle() {
-        return hasTitle;
+    public Title getTitle() {
+        return title;
     }
 
-    public void setHasTitle(Title hasTitle) {
-        this.hasTitle = hasTitle;
+    public void setTitle(Title hasTitle) {
+        this.title = hasTitle;
     }
 
     public Company getWorksAt() {
@@ -93,7 +93,7 @@ public class Labor {
     public String toString() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return "Labor [fName=" + fName + ", lName=" + lName + ", birthDate=" + birthDate + ", sex=" + sex + ", salary="
-                + salary + ", workSince=" + df.format(workSince) + ", hasTitle=" + hasTitle + ", worksAt=" + worksAt
+                + salary + ", workSince=" + df.format(workSince) + ", hasTitle=" + title + ", worksAt=" + worksAt
                 + "]";
     }
 
