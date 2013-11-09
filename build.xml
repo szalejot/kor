@@ -29,7 +29,7 @@
 	</target>
 	
 	<target name="SBQL4J_precompile" depends="declare">
-		<sbql_pre
+		<!-- <sbql_pre
 			sourcedir="${SOURCE_DIR}"
 			destdir="${DEST_DIR}"
 			classpath="${CLASSPATH}"
@@ -40,6 +40,16 @@
 			optimiseIndependentQueries="true"
 			optimiseDb4oIndexes="true"
 			db4oMetabase="db4oIndexes.xml">
+		</sbql_pre> -->
+	    <sbql_pre
+			sourcedir="${SOURCE_DIR}"
+			destdir="${DEST_DIR}"
+			classpath="${CLASSPATH}"
+			codeGenType="NO_STACKS"
+			printExpressionTrace="false"
+			printQueryPretty="true"
+			optimiseDeadQueries="true"
+			optimiseIndependentQueries="true">
 		</sbql_pre>
 <!-- 
 	try also
@@ -49,10 +59,10 @@
 	codeGenType="NO_STACKS" - generates pure java code (still experimental)
 -->
 	</target>
-	<target name="db4oMetadata" depends="declare">
+	<!-- <target name="db4oMetadata" depends="declare">
 		<gatherDb4oMetadata
 			destfile="db4oIndexes.xml"
 			dbfile="testIndexed.db">
 		</gatherDb4oMetadata>
-	</target>
+	</target> -->
 </project>

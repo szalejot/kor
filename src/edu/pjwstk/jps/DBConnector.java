@@ -19,11 +19,15 @@ public class DBConnector {
 
     private ObjectContainer dbConn;
 
-    private ObjectContainer getConnection() {
+    public ObjectContainer getConnection() {
         if (dbConn == null) {
             dbConn = Db4oEmbedded.openFile(Db4oEmbedded.newConfiguration(), "test.db");
         }
         return dbConn;
+    }
+    
+    public void close() {
+        getConnection().close();
     }
 
     public void initializeDB() {

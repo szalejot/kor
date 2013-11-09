@@ -3,31 +3,32 @@ package edu.pjwstk.jps;
 import java.util.List;
 //Próba pusha by r.gulbas
 import pl.wcislo.sbql4j.java.model.runtime.Struct;
+import edu.pjwstk.jps.DBConnector;
 import edu.pjwstk.jps.model.*;
+import java.util.*;
+import com.db4o.*;
 
 public class JPSQueries1 {
 	public static void main(String[] args) {
-		new JPSQueries1();
+	    JPSQueries1 queries = new JPSQueries1();
+		queries.performTest();
 	}
 	
-	private ExampleData data = new ExampleData();
-	
 	public JPSQueries1() {
-		query1();
-		query2();
-		query3();
-		query4();
-		query5();
-		query6();
-		query7();
-		query8();
-		query9();
-		query10();
-		query11();
-		query12();
-		query13();
-		query14();
-		query15();
+
+	}
+	
+	public void performTest() {
+	    DBConnector dbconn = new DBConnector();
+	    
+	    try {
+	        dbconn.initializeDB();
+	        query1();
+	        query2(dbconn);
+	        query3(dbconn);
+        } finally {
+            dbconn.close();
+        }
 	}
 	
 	/**
@@ -40,156 +41,22 @@ public class JPSQueries1 {
 	}
 	
 	/**
-	 * Policz ile wynosi reszta z dzielenia 435 przez 3
+	 * Wypisz nazwiska wszystkich pracowników
 	 */
-	private void query2() {
+	private void query2(DBConnector dbconn) {
 		System.out.println("Query 2");
-//		Integer res = #{ };
-//		System.out.println(res);
+		ObjectContainer db = dbconn.getConnection();
+        Collection<Labor> res = #{ dbconn.(Labor) };
+        System.out.println(res);
 	}
 	
 	/**
 	 * Sprawdź czy 6549 dzieli się przez 4
 	 */
-	private void query3() {
+	private void query3(DBConnector dbconn) {
 		System.out.println("Query 3");
 //		Boolean res = #{ };
 //		System.out.println(res);
 	}
 	
-	/**
-	 * Wypisz nazwiska wszystkich pracowników. Posortuj tą listę.
-	 */
-	private void query4() {
-		System.out.println("Query 4");
-		List<Person> emp = data.getPersons();
-//		List<String> res = #{ };
-//		for(String s : res) {
-//			System.out.println(s);
-//		}
-	}
-	
-	/**
-	 * Wypisz wszystkie samochody czerwone o mocy większej od 200
-	 */
-	private void query5() {
-		System.out.println("Query 5");
-		List<Car> car = data.getCars();
-//		List<Car> redPowerful = #{ };
-//		for(Car c : redPowerful) {
-//			System.out.println(c);
-//		}
-	}
-	
-	/**
-	 * Wypisz na ekran przywitanie wszystkich pracowników po imieniu np. „Hello John!”;
-	 */
-	private void query6() {
-		System.out.println("Query 6");
-		List<Person> emp = data.getPersons();
-//		List<String> res = #{ };
-//		for(String s : res) {
-//			System.out.println(s);
-//		}
-	}
-	
-	/**
-	 * Wypisz dla każdego pracownika nazwisko i ulicę na której pracuje.
-	 */
-	private void query7() {
-		System.out.println("Query 7");
-		List<Person> emp = data.getPersons();
-//		List<Struct> res = #{ };
-//		for(Struct s : res) {
-//			System.out.println(s);
-//		}
-	}
-	
-	/**
-	 * Sprawdź, czy wszyscy pracownicy są zamężni/żonaci (użyj forall)
-	 */
-	private void query8() {
-		System.out.println("Query 8");
-		List<Person> emp = data.getPersons();
-//		Boolean res = #{ };
-//		System.out.println(res);
-	}
-	
-	/**
-	 * Policz średnią wieku mieszkających w Katowicach
-	 */
-	private void query9() {
-		System.out.println("Query 9");
-		List<Person> emp = data.getPersons();
-//		Double res = #{  };
-//		System.out.println(res);
-	}
-	
-	/**
-	 * Wypisz wszystkich pracujących w Warszawie (potrzeba użyć operatora any)
-	 */
-	private void query10() {
-		System.out.println("Query 10");
-		List<Person> emp = data.getPersons();
-//		List<Person> res = #{ };
-//		for(Person p : res) {
-//			System.out.println(p);
-//		}
-	}
-	
-	/**
-	 * Policz ile jest w bazie danych firm (użyj count)
-	 */
-	private void query11() {
-		System.out.println("Query 11");
-		List<Firm> firm = data.getFirms();
-//		Integer res = #{ };
-//		System.out.println(res);
-	}
-	
-	/**
-	 * Dla każdej firmy wypisz jej nazwę i liczbę osób w niej pracujących (użyj „firm as f”)
-	 */
-	private void query12() {
-		System.out.println("Query 12");
-		List<Firm> firm = data.getFirms();
-		List<Person> emp = data.getPersons();
-//		List<Struct> res = #{ };
-	}
-	
-	/**
-	 * Wypisz wszystkie miasta w których mieszkają pracownicy (użyj unique)
-	 */
-	private void query13() {
-		System.out.println("Query 13");
-		List<Person> emp = data.getPersons();
-//		List<String> res = #{ };
-//		for(String s : res) {
-//			System.out.println(s);
-//		}
-	}
-	
-	/**
-	 * Dla każdego miasta wypisz średnią wieku jej mieszkańców.
-	 */
-	private void query14() {
-		System.out.println("Query 14");
-		List<Person> emp = data.getPersons();
-//		List<Struct> res = #{ };
-//		for(Struct s : res) {
-//			System.out.println(s);
-//		}
-	}
-	
-	/**
-	 * Wypisz pracowników na zasadzie „wolny/wolna”Kowalski „zamężna/żonaty”Nowak.
-	 */
-	private void query15() {
-		System.out.println("Query 15");
-		List<Person> emp = data.getPersons();
-//		List<String> res = #{ };
-//		for(String s : res) {
-//			System.out.println(s);
-//		}
-	}
 }
