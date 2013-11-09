@@ -57,8 +57,8 @@ public class Labor {
         return title;
     }
 
-    public void setTitle(Title hasTitle) {
-        this.title = hasTitle;
+    public void setTitle(Title title) {
+        this.title = title;
     }
 
     public Company getWorksAt() {
@@ -93,7 +93,7 @@ public class Labor {
     public String toString() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return "Labor [fName=" + fName + ", lName=" + lName + ", birthDate=" + birthDate + ", sex=" + sex + ", salary="
-                + salary + ", workSince=" + df.format(workSince) + ", hasTitle=" + title + ", worksAt=" + worksAt
+                + salary + ", workSince=" + df.format(workSince) + ", title=" + title + ", worksAt=" + worksAt
                 + "]";
     }
 

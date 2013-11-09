@@ -24,8 +24,10 @@ public class JPSQueries1 {
 	    try {
 	        dbconn.initializeDB();
 	        query1();
-	        query2(dbconn);
-	        query3(dbconn);
+	        Collection<Car> cars = query2(dbconn);
+	        System.out.println("Cars = " + cars);
+	        Collection<Labor> labor = query3(dbconn, 5000d);
+	        System.out.println("Labor = " + labor);
         } finally {
             dbconn.close();
         }
@@ -34,29 +36,30 @@ public class JPSQueries1 {
 	/**
 	 * Policz 1 + 2 * 3 + 4
 	 */
-	private void query1() {
-		System.out.println("Query 1");
+	public void query1() {
+		System.out.println("Query działania");
 		Integer res = #{1 + 2 * 3 + 4};
 		System.out.println(res);
 	}
 	
 	/**
-	 * Wypisz nazwiska wszystkich pracowników
+	 * Pobierz wszystke samochody
 	 */
-	private void query2(DBConnector dbconn) {
-		System.out.println("Query 2");
+	public Collection<Car> query2(DBConnector dbconn) {
+		System.out.println("Query 'wszystkie samochody'");
 		ObjectContainer db = dbconn.getConnection();
-        Collection<Labor> res = #{ dbconn.(Labor) };
-        System.out.println(res);
+        Collection<Car> res = #{ db.(Car) };
+        return res;
 	}
 	
 	/**
-	 * Sprawdź czy 6549 dzieli się przez 4
+	 * Pracownicy o pensji większej niż sal
 	 */
-	private void query3(DBConnector dbconn) {
-		System.out.println("Query 3");
-//		Boolean res = #{ };
-//		System.out.println(res);
+	public Collection<Labor> query3(DBConnector dbconn, double sal) {
+		System.out.println("Query 'Pracownicy o pensji większej niż sal'");
+		ObjectContainer db = dbconn.getConnection();
+        Collection<Labor> res = #{ db.(Labor where salary > sal) };
+        return res;
 	}
 	
 }
