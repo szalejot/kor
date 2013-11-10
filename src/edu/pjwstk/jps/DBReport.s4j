@@ -1,0 +1,83 @@
+package edu.pjwstk.jps;
+
+import java.util.List;
+import pl.wcislo.sbql4j.java.model.runtime.Struct;
+import edu.pjwstk.jps.DBConnector;
+import edu.pjwstk.jps.model.*;
+import java.util.*;
+import com.db4o.*;
+
+/**
+ * Lista raportów:
+ * 
+ *  1. Oddziały firmy, w których żaden pracownik nie ma szkolenia x.
+ *  2. Oddziały firmy dla których w danym miesiącu nie było dnia, żeby wszystkie samochody były zajęte. (każdego dnia miesiąca przynajmniej jeden samochód był wolny).
+ *  3. Utylizacja samochodów w danym oddziale dla miesiąca x. (ile % miesiąca były używane)
+ *  4. Oddziały firmy których dyrektor pracuje dłużej niż x lat.
+ *  5. Średnia długość stażu pracownika z rozbiciem na oddziały.
+ *  6. Liczba pracowników w poszczególnych oddziałach firmy. 
+ *  7. Wylistuj pracowników którzy nie mieli awansu od x lat
+ *  8. Lista pracowników na stanowiskach zarządczych
+ *  9. Średnia liczba szkoleń na pracownika w poszczególnych oddziałach firmy
+ * 10. Lista samochodów starszych niż x lat w poszczególnych oddziałach firmy
+ * 11. Lista oddziałów w których pracują kobiety młodsze niż x lat i ich liczba.
+ * 
+ * @author Michal
+ *
+ */
+public class DBReport {
+
+    DBConnector dbconn;
+    
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+       DBReport dbReport = new DBReport();
+       dbReport.init();
+       Collection<Company> res4 = dbReport.report4(2);
+       System.out.println("Report 4 = " + res4);
+       Collection<Struct> res6 = dbReport.report6();
+       System.out.println("Report 6 = " + res6);
+       Collection<Labor> res8 = dbReport.report8();
+       System.out.println("Report 8 = " + res8);
+       dbReport.close();
+    }
+    
+    public void init() {
+        dbconn = new DBConnector();
+        dbconn.initializeDB();
+    }
+    
+    public void close() {
+        dbconn.close();
+    }
+    
+    /**
+     * 4. Oddziały firmy których dyrektor pracuje dłużej niż x lat. 
+     */
+    public Collection<Company> report4(int lenghtInYears) {
+        ObjectContainer db = dbconn.getConnection();
+        Collection<Company> res = #{ db.( Company ) };
+        return res;
+    }
+    
+    /**
+     * 6. Liczba pracowników w poszczególnych oddziałach firmy. 
+     */
+    public Collection<Struct> report6() {
+        ObjectContainer db = dbconn.getConnection();
+        Collection<Struct> res = #{ db.( (Company as c).(c.name, count(Labor where worksAt == c)) ) };
+        return res;
+    }
+    
+    /**
+     * 8. Lista pracowników na stanowiskach zarządczych. 
+     */
+    public Collection<Labor> report8() {
+        ObjectContainer db = dbconn.getConnection();
+        Collection<Labor> res = #{ db.( (Labor as l) where l.worksAt.director == l ) };
+        return res;
+    }
+
+}

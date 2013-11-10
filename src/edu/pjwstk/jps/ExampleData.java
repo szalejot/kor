@@ -137,6 +137,7 @@ public class ExampleData {
         
         Labor director = compLabor.get(0);
         director.setTitle(titles.get(0));
+        comp.setDirector(director);
         labors.addAll(compLabor);
         cars.addAll(compCars);
         
