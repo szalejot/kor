@@ -218,7 +218,7 @@ public class MenuMain implements ActionListener {
             i = getUserInput();
             report.init();
             try {
-                Collection<?> resultSet = report.report10(i);
+                Collection<?> resultSet = report.report10(10);
                 newPanel.AddTableToPanel(resultSet);
             } 
             finally {
