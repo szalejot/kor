@@ -35,12 +35,16 @@ public class DBReport {
     public static void main(String[] args) {
        DBReport dbReport = new DBReport();
        dbReport.init();
-       Collection<Company> res4 = dbReport.report4(2);
+       Collection<Company> res4 = dbReport.report4(10);
        System.out.println("Report 4 = " + res4);
        Collection<Struct> res6 = dbReport.report6();
        System.out.println("Report 6 = " + res6);
+       Collection<Labor> res7 = dbReport.report7(10);
+       System.out.println("Report 7 = " + res7);
        Collection<Labor> res8 = dbReport.report8();
        System.out.println("Report 8 = " + res8);
+       Collection<Struct> res10 = dbReport.report10(10);
+       System.out.println("Report 10 = " + res10);
        dbReport.close();
     }
     
@@ -58,7 +62,10 @@ public class DBReport {
      */
     public Collection<Company> report4(int lenghtInYears) {
         ObjectContainer db = dbconn.getConnection();
-        Collection<Company> res = #{ db.( Company ) };
+        long milisInDay = 24 * 3600 * 1000;
+        Date today = new Date();
+        Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
+        Collection<Company> res = #{ db.( Company where director.workSince.time < date.time ) };
         return res;
     }
     
@@ -72,11 +79,35 @@ public class DBReport {
     }
     
     /**
+     * 7. Wylistuj pracowników którzy nie mieli awansu od x lat. 
+     */
+    public Collection<Labor> report7(int lenghtInYears) {
+        ObjectContainer db = dbconn.getConnection();
+        long milisInDay = 24 * 3600 * 1000;
+        Date today = new Date();
+        Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
+        Collection<Labor> res = #{ db.( Labor where hasTitleSince.time < date.time ) };
+        return res;
+    }
+    
+    /**
      * 8. Lista pracowników na stanowiskach zarządczych. 
      */
     public Collection<Labor> report8() {
         ObjectContainer db = dbconn.getConnection();
         Collection<Labor> res = #{ db.( (Labor as l) where l.worksAt.director == l ) };
+        return res;
+    }
+    
+    /**
+     * 10. Lista samochodów starszych niż x lat w poszczególnych oddziałach firmy 
+     */
+    public Collection<Struct> report10(int lenghtInYears) {
+        ObjectContainer db = dbconn.getConnection();
+        long milisInDay = 24 * 3600 * 1000;
+        Date today = new Date();
+        Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
+        Collection<Struct> res = #{ db.( (Company as com).(com, (Car as c) where (c.owner == com and c.prodDate.time < date.time)) ) };
         return res;
     }
 
