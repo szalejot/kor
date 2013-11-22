@@ -235,6 +235,9 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
         case "cbType":
             companyHQ = new ArrayList<String>(((Collection<String>) getGUIQueriesResult(queryGUI, "getCompany","headquaters")));
             comboHQ.removeItemListener(this);
+            comboBranch.removeItemListener(this);
+            comboDep.removeItemListener(this);
+            comboSec.removeItemListener(this);
             if(comboBranch.getItemCount()!=0){comboBranch.removeAllItems();};
             if(comboDep.getItemCount()!=0){comboDep.removeAllItems();};
             if(comboSec.getItemCount()!=0){comboSec.removeAllItems();};
@@ -251,6 +254,9 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
                 }
             comboHQ.setSelectedItem(null);
             comboHQ.addItemListener(this);
+            comboBranch.addItemListener(this);
+            comboDep.addItemListener(this);
+            comboSec.addItemListener(this);
             switch(comboType.getSelectedItem().toString()){
             case "branch":
                 comboHQ.setEnabled(true);              
