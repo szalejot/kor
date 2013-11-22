@@ -1,0 +1,70 @@
+package edu.pjwstk.jps;
+
+import java.util.List;
+import pl.wcislo.sbql4j.java.model.runtime.Struct;
+import edu.pjwstk.jps.DBConnector;
+import edu.pjwstk.jps.model.*;
+import java.util.*;
+import com.db4o.*;
+/*
+ * Zapytania SBQLowe dla potrzeb GUI, dodawanie, modyfikowanie, usuwanie elementów.
+ * 
+ * @author Rafal
+ *
+ */
+public class GUIQueries {
+
+    DBConnector dbconn;
+    private ObjectContainer db;
+
+    public static void main(String[] args) {
+       GUIQueries query = new GUIQueries();
+       query.init();
+	   Collection<String> res = query.getCompanyBranch();
+	   System.out.println("CompanyBranches = " + res);
+	   Collection<String> res1 = query.getCompany("branch");
+	   System.out.println("Company = " + res1);
+	   Collection<String> res2 = query.getInnerCompany("section nr 176");
+	   System.out.println("Owned by section nr 176 = " + res2);	   
+	   Collection<CompanyBranch> res3 = query.getCompanyBranchClass("headquaters");
+       System.out.println("comp branch"+res3);
+       query.close();
+      
+    }
+    
+    public void init() {
+        dbconn = new DBConnector();
+        db = dbconn.getConnection();
+    }
+    
+    public void close() {
+        dbconn.close();
+    }
+    
+    public Collection<String> getCompanyBranch(){
+    	Collection<String> res = #{ db.(CompanyBranch.name) };
+    	return res;
+    }
+    public Collection<CompanyBranch> getCompanyBranchClass(String branch){
+    	Collection<CompanyBranch> res = #{ db.(CompanyBranch where name == branch ) };
+    	return res;
+    }
+    
+    public Collection<String> getCompany(String branch){
+    	//Collection<String> res = #{ db.(Company as c).(c.name where c.type.name == branch) };
+    	Collection<String> res = #{ db.((Company where type.name == branch).name) };
+    	
+    	return res;
+    }
+    public Collection<Company> getCompanyClass(String comp){
+    	Collection<Company> res = #{ db.(Company where name == comp) };
+    	return res;
+    }
+    
+    
+    public Collection<String> getInnerCompany(String owner){
+    	Collection<String> res = #{ db.(Company as c).(c.name where c.partOf.name == owner) };
+    	return res;
+    }
+    
+}

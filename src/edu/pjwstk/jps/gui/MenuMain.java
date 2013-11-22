@@ -18,6 +18,7 @@ import edu.pjwstk.jps.DBReport;
 public class MenuMain implements ActionListener {
     public JScrollPane scrollPane;
     public CreatePanel newPanel;
+    public CreateInputPanel newInputPanel;
     public JPanel contentPane;
     static JFrame frame;
     private DBReport report;
@@ -104,6 +105,11 @@ public class MenuMain implements ActionListener {
         JMenuItem source = (JMenuItem) (e.getSource());
 
         switch (source.getName()) {
+        case "addCompany":
+            newInputPanel = new CreateInputPanel();
+            newInputPanel.createInputCompany();
+            repaintFrame(newInputPanel);
+            break;
         case "report4":
             newPanel = new CreatePanel();
             repaintFrame(newPanel);
@@ -155,11 +161,8 @@ public class MenuMain implements ActionListener {
                         newPanel.AddTableToPanel("Niestety program dostal niedozwolone argumenty!");
                         e.printStackTrace();
                     } catch (InvocationTargetException e) {
-                        // TODO Auto-generated catch block
                         newPanel.AddTableToPanel("Niestety program przestal dzialac bo zapytanie SBQLa sie wywalilo!");
                         e.printStackTrace();
-                    } finally {
-                        report.close();
                     }
                 }
             }
@@ -171,16 +174,11 @@ public class MenuMain implements ActionListener {
                         Collection<?> resultSet = (Collection<?>) metody[x].invoke(report);
                         newPanel.AddTableToPanel(resultSet);
                     } catch (IllegalAccessException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     } catch (IllegalArgumentException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     } catch (InvocationTargetException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
-                    } finally {
-                        report.close();
                     }
                 }
             }
@@ -219,7 +217,6 @@ public class MenuMain implements ActionListener {
         // Create and set up the content pane.
         MenuMain mainMenu = new MenuMain();
         frame.setJMenuBar(mainMenu.createMenuBar());
-        // frame.setContentPane(demo.createContentPane());
 
         // Display the window.
         frame.setSize(1000, 700);

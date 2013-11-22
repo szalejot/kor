@@ -17,7 +17,7 @@ import edu.pjwstk.jps.model.TrainingProduct;
 
 public class DBConnector {
 
-    private ObjectContainer dbConn;
+    private static ObjectContainer dbConn = null;
 
     public ObjectContainer getConnection() {
         if (dbConn == null) {

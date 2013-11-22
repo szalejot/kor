@@ -26,7 +26,7 @@ public class CreateTable extends AbstractTableModel {
     private Struct tmpStruct;
 
     public CreateTable(Collection<?> resultSet1) {
-        resultSet = (ArrayList<?>) resultSet1;
+        resultSet = new ArrayList<>(resultSet1);
 
         // if resultSet is not empty then check, otherwise print 'Sorry, there
         // are no records that match your search'
