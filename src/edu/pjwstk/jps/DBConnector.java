@@ -33,66 +33,39 @@ public class DBConnector {
     public void initializeDB() {
         ObjectContainer con = getConnection();
         ExampleData data = new ExampleData();
-        ObjectSet<Car> cars = con.query(Car.class);
-        if (cars.isEmpty()) {
+        ObjectSet<Company> companies = con.query(Company.class);
+        if (companies.isEmpty()) {
             for (Car c : data.getCars()) {
                 con.store(c);
             }
-        }
-        ObjectSet<Company> companies = con.query(Company.class);
-        if (companies.isEmpty()) {
             for (Company c : data.getCompanies()) {
                 con.store(c);
             }
-        }
-        ObjectSet<CompanyBranch> companyBranches = con.query(CompanyBranch.class);
-        if (companyBranches.isEmpty()) {
             for (CompanyBranch c : data.getCompanyBranches()) {
                 con.store(c);
             }
-        }
-        ObjectSet<Labor> labors = con.query(Labor.class);
-        if (labors.isEmpty()) {
             for (Labor c : data.getLabors()) {
                 con.store(c);
             }
-        }
-        ObjectSet<RentCar> rentCars = con.query(RentCar.class);
-        if (rentCars.isEmpty()) {
             for (RentCar c : data.getRentCars()) {
                 con.store(c);
             }
-        }
-        ObjectSet<Title> titles = con.query(Title.class);
-        if (titles.isEmpty()) {
             for (Title c : data.getTitles()) {
                 con.store(c);
             }
-        }
-        ObjectSet<Training> trainings = con.query(Training.class);
-        if (trainings.isEmpty()) {
             for (Training c : data.getTrainings()) {
                 con.store(c);
             }
-        }
-        ObjectSet<TrainingAssignment> trainingAssingments = con.query(TrainingAssignment.class);
-        if (trainingAssingments.isEmpty()) {
             for (TrainingAssignment c : data.getTrainingAssignments()) {
                 con.store(c);
             }
-        }
-        ObjectSet<TrainingCompany> trainingCompanies = con.query(TrainingCompany.class);
-        if (trainingCompanies.isEmpty()) {
             for (TrainingCompany c : data.getTrainingCompanies()) {
                 con.store(c);
             }
-        }
-        ObjectSet<TrainingProduct> trainigProducts = con.query(TrainingProduct.class);
-        if (trainigProducts.isEmpty()) {
             for (TrainingProduct c : data.getTrainingProducts()) {
                 con.store(c);
             }
+            con.commit();
         }
-        con.commit();
     }
 }

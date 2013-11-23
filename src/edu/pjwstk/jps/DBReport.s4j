@@ -1,10 +1,11 @@
 package edu.pjwstk.jps;
 
-import java.util.List;
 import pl.wcislo.sbql4j.java.model.runtime.Struct;
 import edu.pjwstk.jps.DBConnector;
 import edu.pjwstk.jps.model.*;
+
 import java.util.*;
+
 import com.db4o.*;
 
 /**
@@ -35,16 +36,24 @@ public class DBReport {
     public static void main(String[] args) {
        DBReport dbReport = new DBReport();
        dbReport.init();
-       Collection<Company> res4 = dbReport.report4(10);
-       System.out.println("Report 4 = " + res4);
-       Collection<Struct> res6 = dbReport.report6();
-       System.out.println("Report 6 = " + res6);
-       Collection<Labor> res7 = dbReport.report7(10);
-       System.out.println("Report 7 = " + res7);
-       Collection<Labor> res8 = dbReport.report8();
-       System.out.println("Report 8 = " + res8);
-       Collection<Struct> res10 = dbReport.report10(10);
-       System.out.println("Report 10 = " + res10);
+       GUIQueries queries = new GUIQueries();
+       queries.init();
+       Collection<Struct> res3 = dbReport.report3((Company)(queries.getCompanyClass("headquaters nr 0").toArray()[0]), 2013, 10);
+       System.out.println("Report 3 = " + res3);
+//       Collection<Company> res4 = dbReport.report4(10);
+//       System.out.println("Report 4 = " + res4);
+//       Collection<Struct> res5 = dbReport.report5();
+//       System.out.println("Report 5 = " + res5);
+//       Collection<Struct> res6 = dbReport.report6();
+//       System.out.println("Report 6 = " + res6);
+//       Collection<Labor> res7 = dbReport.report7(10);
+//       System.out.println("Report 7 = " + res7);
+//       Collection<Labor> res8 = dbReport.report8();
+//       System.out.println("Report 8 = " + res8);
+//       Collection<Struct> res9 = dbReport.report9();
+//       System.out.println("Report 9 = " + res9);
+//       Collection<Struct> res10 = dbReport.report10(10);
+//       System.out.println("Report 10 = " + res10);
        dbReport.close();
     }
     
@@ -58,14 +67,41 @@ public class DBReport {
     }
     
     /**
+     * 3. Utylizacja samochodów w danym oddziale dla miesiąca x. (ile % miesiąca były używane) 
+     */
+    public Collection<Struct> report3(Company company, int year, int month) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, month, 1, 0, 0);
+        float daysInMonth = begin.getActualMaximum(Calendar.DAY_OF_MONTH);
+        end.set(year, month, (int)daysInMonth, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Struct> res = #{ db.( ((Car where owner == company) as c).(c, count(RentCar where car == c and date.time > beginDate.time and date.time < endDate.time )*100/daysInMonth) ) };
+        return res;
+    }
+    
+    /**
      * 4. Oddziały firmy których dyrektor pracuje dłużej niż x lat. 
      */
     public Collection<Company> report4(int lenghtInYears) {
         ObjectContainer db = dbconn.getConnection();
-        long milisInDay = 24 * 3600 * 1000;
+        long milisInDay = 24l * 3600l * 1000l;
         Date today = new Date();
         Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
         Collection<Company> res = #{ db.( Company where director.workSince.time < date.time ) };
+        return res;
+    }
+    
+    /**
+     * 5. Średnia długość stażu pracownika z rozbiciem na oddziały. 
+     */
+    public Collection<Struct> report5() {
+        ObjectContainer db = dbconn.getConnection();
+        long milisInYear = 365l * 24l * 3600l * 1000l;
+        Date today = new Date();
+        Collection<Struct> res = #{ db.( (Company as c).(c.name, avg( (Labor where worksAt == c).((today.time - workSince.time)/milisInYear))  )) };
         return res;
     }
     
@@ -83,7 +119,7 @@ public class DBReport {
      */
     public Collection<Labor> report7(int lenghtInYears) {
         ObjectContainer db = dbconn.getConnection();
-        long milisInDay = 24 * 3600 * 1000;
+        long milisInDay = 24l * 3600l * 1000l;
         Date today = new Date();
         Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
         Collection<Labor> res = #{ db.( Labor where hasTitleSince.time < date.time ) };
@@ -100,11 +136,20 @@ public class DBReport {
     }
     
     /**
+     * 9. Średnia liczba szkoleń na pracownika w poszczególnych oddziałach firmy. 
+     */
+    public Collection<Struct> report9() {
+        ObjectContainer db = dbconn.getConnection();
+        Collection<Struct> res = #{ db.( (Company as c).(c.name, avg( ((Labor as l) where l.worksAt == c).(count(TrainingAssignment where labor == l))) ) ) };
+        return res;
+    }
+    
+    /**
      * 10. Lista samochodów starszych niż x lat w poszczególnych oddziałach firmy 
      */
     public Collection<Struct> report10(int lenghtInYears) {
         ObjectContainer db = dbconn.getConnection();
-        long milisInDay = 24 * 3600 * 1000;
+        long milisInDay = 24l * 3600l * 1000l;
         Date today = new Date();
         Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
         Collection<Struct> res = #{ db.( (Company as com).(com, (Car as c) where (c.owner == com and c.prodDate.time < date.time)) ) };

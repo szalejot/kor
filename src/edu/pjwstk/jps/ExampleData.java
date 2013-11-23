@@ -20,7 +20,7 @@ public class ExampleData {
     
     private static int NUM_OF_LABOR_PER_COMP = 30;
     private static int NUM_OF_CARS_PER_COMP = 10;
-    private static int NUM_OF_RENTS_PER_COMP = 10000;
+    private static int NUM_OF_RENTS_PER_COMP = 3000;
 
     private List<Car> cars;
     private List<Company> companies;
@@ -34,53 +34,70 @@ public class ExampleData {
     private List<TrainingProduct> trainingProducts;
     
     private Random rand;
+    
+    private Boolean initialized;
 
     public ExampleData() {
         rand = new Random();
-        initData();
+        initialized = false;
     }
     
     public List<Car> getCars() {
+        initData();
         return cars;
     }
 
     public List<Company> getCompanies() {
+        initData();
         return companies;
     }
 
     public List<CompanyBranch> getCompanyBranches() {
+        initData();
         return companyBranches;
     }
 
     public List<Labor> getLabors() {
+        initData();
         return labors;
     }
 
     public List<RentCar> getRentCars() {
+        initData();
         return rentCars;
     }
 
     public List<Title> getTitles() {
+        initData();
         return titles;
     }
 
     public List<Training> getTrainings() {
+        initData();
         return trainings;
     }
 
     public List<TrainingAssignment> getTrainingAssignments() {
+        initData();
         return trainingAssignments;
     }
 
     public List<TrainingCompany> getTrainingCompanies() {
+        initData();
         return trainingCompanies;
     }
 
     public List<TrainingProduct> getTrainingProducts() {
+        initData();
         return trainingProducts;
     }
 
     private void initData() {
+        if (initialized) {
+            return;
+        } else {
+            initialized = true;
+        }
         System.out.println("Starting example data initialization...");
         System.out.println("-- cars");
         cars = new ArrayList<Car>();
@@ -112,8 +129,8 @@ public class ExampleData {
         long milisInDay = 24 * 3600 * 1000;
         Date today = new Date();
         for (int i = 0; i < numOfTrainings; i++) {
-            Labor labor = labors.get(rand.nextInt(labors.size() - 1));
-            Training training = trainings.get(rand.nextInt(trainings.size() - 1));
+            Labor labor = labors.get(rand.nextInt(labors.size()));
+            Training training = trainings.get(rand.nextInt(trainings.size()));
             Date date = new Date(today.getTime() - milisInDay * rand.nextInt(365));
             result.add(new TrainingAssignment(labor, training, date));
         }
@@ -121,15 +138,18 @@ public class ExampleData {
         return result;
     }
     
-    private List<Company> initCompanies(int lvl, Company parent, int branchesPerLevel) {
+    private List<Company> initCompanies(int lvl, Company parent, int maxBranchesPerLevel) {
         List<Company> result = new ArrayList<Company>();
         
-        String name = companyBranches.get(lvl).getName() + " nr " + rand.nextInt(1000);
+        int branchNumber;
+        if (lvl == 0) {
+            branchNumber = 0;
+        } else {
+            branchNumber = rand.nextInt(1000);
+        }
+        String name = companyBranches.get(lvl).getName() + " nr " + branchNumber;
         
         Company comp = new Company(name, parent, companyBranches.get(lvl));
-        if (parent == null) {
-            comp.setPartOf(comp);
-        }
         result.add(comp);
         
         List<Car> compCars = initCarsPerCompany(comp);
@@ -144,15 +164,16 @@ public class ExampleData {
         long milisInDay = 24 * 3600 * 1000;
         Date today = new Date();
         for (int i = 0; i < NUM_OF_RENTS_PER_COMP; i++) {
-            Labor labor = compLabor.get(rand.nextInt(compLabor.size() - 1));
-            Car car = compCars.get(rand.nextInt(compCars.size() - 1));
+            Labor labor = compLabor.get(rand.nextInt(compLabor.size()));
+            Car car = compCars.get(rand.nextInt(compCars.size()));
             Date date = new Date(today.getTime() - milisInDay * rand.nextInt(365));
             rentCars.add(new RentCar(labor, car, date));
         }
         
         if (lvl < companyBranches.size() - 1) {
-            for (int i = 0; i < branchesPerLevel; i++) {
-                result.addAll(initCompanies(lvl + 1, comp, branchesPerLevel));
+            int branches = rand.nextInt(maxBranchesPerLevel) + 1;
+            for (int i = 0; i < branches; i++) {
+                result.addAll(initCompanies(lvl + 1, comp, maxBranchesPerLevel));
             }
         }
         
@@ -230,7 +251,7 @@ public class ExampleData {
             for (TrainingProduct prod : trainingProducts) {
                 for (String tp : thirdPart) {
                     result.add(new Training(fp + " " + prod.getFullName() + " " + tp,
-                            trainingCompanies.get(rand.nextInt(trainingCompanies.size() - 1)),
+                            trainingCompanies.get(rand.nextInt(trainingCompanies.size())),
                             prod, rand.nextInt(13) + 1));
                 }
             }
@@ -270,9 +291,9 @@ public class ExampleData {
         
         for (int i = 0; i < NUM_OF_CARS_PER_COMP; i++) {
             int nr = rand.nextInt(100);
-            String manufacturer = manufacturers.get(rand.nextInt(manufacturers.size() - 1));
-            String type = types.get(rand.nextInt(types.size() - 1));
-            String color = colors.get(rand.nextInt(colors.size() - 1));
+            String manufacturer = manufacturers.get(rand.nextInt(manufacturers.size()));
+            String type = types.get(rand.nextInt(types.size()));
+            String color = colors.get(rand.nextInt(colors.size()));
             Date prodDate = new Date(today.getTime() - rand.nextInt(5000) * milisInDay);
             result.add(new Car(nr, manufacturer, type, color, prodDate, company));
         }
@@ -282,8 +303,9 @@ public class ExampleData {
     
     private List<Labor> initLaborsPerCompany(Company company) {
         List<Labor> result = new ArrayList<Labor>();
+        int laborsNum = (int)(NUM_OF_LABOR_PER_COMP * (rand.nextFloat() + 0.5f) );
         
-        for (int i = 0; i < NUM_OF_LABOR_PER_COMP; i++) {
+        for (int i = 0; i < laborsNum; i++) {
             result.add(initLabor(company));
         }
 
@@ -503,12 +525,12 @@ public class ExampleData {
 
         if (rand.nextBoolean()) {
             sex = 'F';
-            fName = femaleFNames.get(rand.nextInt(femaleFNames.size() - 1));
-            lName = femaleLNames.get(rand.nextInt(femaleLNames.size() - 1));
+            fName = femaleFNames.get(rand.nextInt(femaleFNames.size()));
+            lName = femaleLNames.get(rand.nextInt(femaleLNames.size()));
         } else {
             sex = 'M';
-            fName = maleFNames.get(rand.nextInt(maleFNames.size() - 1));
-            lName = maleLNames.get(rand.nextInt(maleLNames.size() - 1));
+            fName = maleFNames.get(rand.nextInt(maleFNames.size()));
+            lName = maleLNames.get(rand.nextInt(maleLNames.size()));
         }
         Date today = new Date();
         Date birthDate = new Date(today.getTime() - 18 * 365 * milisInDay - milisInDay * rand.nextInt(16425));
@@ -516,7 +538,7 @@ public class ExampleData {
         Date hasTitleSince = new Date(today.getTime() - milisInDay * rand.nextInt(4000));
         // nie chcemy roli dyrektora, dyrektora stworzymy podczas tworzenia
         // nowej company
-        Title title = titles.get(rand.nextInt(titles.size() - 2) + 1);
+        Title title = titles.get(rand.nextInt(titles.size() - 1) + 1);
         return new Labor(fName, lName, birthDate, sex, company, title, rand.nextInt(10000) + 2000d, hasTitleSince,
                 workSince);
 
