@@ -28,7 +28,7 @@ import com.db4o.*;
  */
 public class DBReport {
 
-    DBConnector dbconn;
+    public DBConnector dbconn;
     
     /**
      * @param args
@@ -38,8 +38,12 @@ public class DBReport {
        dbReport.init();
        GUIQueries queries = new GUIQueries();
        queries.init();
-       Collection<Struct> res3 = dbReport.report3((Company)(queries.getCompanyClass("headquaters nr 0").toArray()[0]), 2013, 10);
-       System.out.println("Report 3 = " + res3);
+       ObjectContainer db = dbReport.dbconn.getConnection();
+//       Collection<Training> trainings = #{ db.( Training ) };
+//       Collection<Company> res1 = dbReport.report1((Training)(trainings.toArray()[0]));
+//       System.out.println("Report 1 = " + res1);
+//       Collection<Struct> res3 = dbReport.report3((Company)(queries.getCompanyClass("headquaters nr 0").toArray()[0]), 2013, 10);
+//       System.out.println("Report 3 = " + res3);
 //       Collection<Company> res4 = dbReport.report4(10);
 //       System.out.println("Report 4 = " + res4);
 //       Collection<Struct> res5 = dbReport.report5();
@@ -54,6 +58,8 @@ public class DBReport {
 //       System.out.println("Report 9 = " + res9);
 //       Collection<Struct> res10 = dbReport.report10(10);
 //       System.out.println("Report 10 = " + res10);
+       Collection<Struct> res11 = dbReport.report11(25);
+       System.out.println("Report 11 = " + res11);
        dbReport.close();
     }
     
@@ -64,6 +70,15 @@ public class DBReport {
     
     public void close() {
         dbconn.close();
+    }
+    
+    /**
+     * 1. Oddziały firmy, w których żaden pracownik nie ma szkolenia x. 
+     */
+    public Collection<Company> report1(Training tt) {
+        ObjectContainer db = dbconn.getConnection();
+        Collection<Company> res = #{ db.( Company as c where not exists (TrainingAssignment where labor.worksAt == c and training == tt)) };
+        return res;
     }
     
     /**
@@ -153,6 +168,17 @@ public class DBReport {
         Date today = new Date();
         Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
         Collection<Struct> res = #{ db.( (Company as com).(com, (Car as c) where (c.owner == com and c.prodDate.time < date.time)) ) };
+        return res;
+    }
+    
+    /**
+     * 11. Lista oddziałów w których pracują kobiety młodsze niż x lat i ich liczba. 
+     */
+    public Collection<Struct> report11(int age) {
+        ObjectContainer db = dbconn.getConnection();
+        long milisInYear = 365l * 24l * 3600l * 1000l;
+        Date today = new Date();
+        Collection<Struct> res = #{ db.( (Company as c where exists (Labor where worksAt == c and sex == 'M' and today.time - birthDate.time < milisInYear*age)).(c, count(Labor where worksAt == c and sex == 'M' and today.time - birthDate.time < milisInYear*age) ) ) };
         return res;
     }
 
