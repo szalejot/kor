@@ -1,5 +1,6 @@
 package edu.pjwstk.jps.gui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -83,6 +84,7 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
         
         JLabel textCompanyName = new JLabel("Insert a company name:");
         errorMsg = new JLabel();
+        errorMsg.setForeground(Color.RED);
         errorMsg.setVisible(false);
         companyName = new JTextField();
         
@@ -93,26 +95,27 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
         updateButton.setName("updateButton");
         updateButton.addActionListener(this);
 
-        addToPane(20,50, 0.0, 2, 0, 0, textCompanyName);
-        addToPane(20,50, 0.0, 2, 2, 0, companyName);
+        addToPane(20,50, 0.0, 2, 2, 0, errorMsg);
+        addToPane(20,50, 0.0, 2, 0, 1, textCompanyName);
+        addToPane(20,50, 0.0, 2, 2, 1, companyName);
         
-        addToPane(20,50, 0.0, 2, 0, 1, textType);
-        addToPane(20,50, 0.0, 1, 2, 1, comboType);
+        addToPane(20,50, 0.0, 2, 0, 2, textType);
+        addToPane(20,50, 0.0, 1, 2, 2, comboType);
         
-        addToPane(20,50, 0.0, 1, 0, 2, textHQ);
-        addToPane(20,50, 0.0, 1, 0, 3, comboHQ);
+        addToPane(20,50, 0.0, 1, 0, 3, textHQ);
+        addToPane(20,50, 0.0, 1, 0, 4, comboHQ);
         
-        addToPane(20,50, 0.0, 1, 1, 2, textBranch);
-        addToPane(20,50, 0.0, 1, 1, 3, comboBranch);
+        addToPane(20,50, 0.0, 1, 1, 3, textBranch);
+        addToPane(20,50, 0.0, 1, 1, 4, comboBranch);
         
-        addToPane(20,50, 0.0, 1, 2, 2, textDep);
-        addToPane(20,50, 0.0, 1, 2, 3, comboDep);
+        addToPane(20,50, 0.0, 1, 2, 3, textDep);
+        addToPane(20,50, 0.0, 1, 2, 4, comboDep);
         
-        addToPane(20,50, 0.0, 1, 3, 2, textSec);
-        addToPane(20,50, 0.0, 1, 3, 3, comboSec);
+        addToPane(20,50, 0.0, 1, 3, 3, textSec);
+        addToPane(20,50, 0.0, 1, 3, 4, comboSec);
         
-        addToPane(20,50, 0.0, 2, 0, 4, addButton);
-        addToPane(20,50, 0.0, 2, 2, 4, updateButton);         
+        addToPane(20,50, 0.0, 2, 0, 5, addButton);
+        addToPane(20,50, 0.0, 2, 2, 5, updateButton);         
     }
     public void addToPane(int ipady, int ipadx, double weightx, int gridwidth, int gridx, int gridy, Component obj){
         /*
@@ -161,7 +164,7 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
                 ArrayList<String> error = new ArrayList<>();
                 error.add("SBQL Query Error");
                 resultSet = (Collection<String>)error;
-                //e.printStackTrace();
+                e.printStackTrace();
             }
         return resultSet;        
     }
@@ -177,6 +180,7 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        errorMsg.setVisible(false);
            JButton bt = (JButton)e.getSource();
            if(bt.getName().equals("addButton")){
                String name = companyName.getText();
@@ -185,7 +189,8 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
                
                if(comboType.getSelectedItem()==null)
                {
-            //dodac obsluge jak null bedzie       
+                errorMsg.setText("You need to select type of organization unit you wish to add.");
+                errorMsg.setVisible(true);
                }else{
                switch(comboType.getSelectedItem().toString()){
              case "headquaters":
@@ -220,7 +225,10 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
                DBConnector dbconn = new DBConnector();
                ObjectContainer db = dbconn.getConnection();
                db.store(toAdd);
-               db.commit();               
+               db.commit();  
+               errorMsg.setText("Poprawnie dodano obiekt: "+ name + " do bazy danych.");
+               errorMsg.setVisible(true);
+               
            }
            }
            else if (bt.getName().equals("updateButton")){
@@ -230,6 +238,7 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
 
     @Override
     public void itemStateChanged(ItemEvent e) {
+        errorMsg.setVisible(false);
         JComboBox<?> cb = (JComboBox<?>)e.getSource();
         switch(cb.getName()){
         case "cbType":
@@ -242,9 +251,6 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
             if(comboDep.getItemCount()!=0){comboDep.removeAllItems();};
             if(comboSec.getItemCount()!=0){comboSec.removeAllItems();};
             if(comboHQ.getItemCount()!=0){comboHQ.removeAllItems();};
-//            comboDep.removeAllItems();
-//            comboSec.removeAllItems();
-//            comboHQ.removeAllItems();
             comboBranch.setEnabled(false);
             comboDep.setEnabled(false);
             comboSec.setEnabled(false);

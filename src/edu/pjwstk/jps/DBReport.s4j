@@ -75,9 +75,9 @@ public class DBReport {
     /**
      * 1. Oddziały firmy, w których żaden pracownik nie ma szkolenia x. 
      */
-    public Collection<Company> report1(Training tt) {
+    public Collection<Company> report1(String tName) {
         ObjectContainer db = dbconn.getConnection();
-        Collection<Company> res = #{ db.( Company as c where not exists (TrainingAssignment where labor.worksAt == c and training == tt)) };
+        Collection<Company> res = #{ db.( Company as c where not exists (TrainingAssignment where labor.worksAt == c and training.name == tName)) };
         return res;
     }
     
