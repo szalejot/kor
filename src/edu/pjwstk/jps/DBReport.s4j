@@ -5,6 +5,7 @@ import edu.pjwstk.jps.DBConnector;
 import edu.pjwstk.jps.model.*;
 
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 import com.db4o.*;
 
@@ -12,7 +13,7 @@ import com.db4o.*;
  * Lista raportów:
  * 
  *  1. Oddziały firmy, w których żaden pracownik nie ma szkolenia x.
- *  2. Oddziały firmy dla których w danym miesiącu nie było dnia, żeby wszystkie samochody były zajęte. (każdego dnia miesiąca przynajmniej jeden samochód był wolny).
+ *  2. Liczba wypożyczonych samochodów w oddziałach w danym dniu miesiąca.
  *  3. Utylizacja samochodów w danym oddziale dla miesiąca x. (ile % miesiąca były używane)
  *  4. Oddziały firmy których dyrektor pracuje dłużej niż x lat.
  *  5. Średnia długość stażu pracownika z rozbiciem na oddziały.
@@ -22,6 +23,11 @@ import com.db4o.*;
  *  9. Średnia liczba szkoleń na pracownika w poszczególnych oddziałach firmy
  * 10. Lista samochodów starszych niż x lat w poszczególnych oddziałach firmy
  * 11. Lista oddziałów w których pracują kobiety młodsze niż x lat i ich liczba.
+ * 12. Liczba szkoleń na pracownika oddziału w danym roku.
+ * 13. Liczba przeprowadzonych szkoleń w roku względem produktu.
+ * 14. Liczba przeprowadzonych szkoleń w roku względem szkolenia.
+ * 15. Liczba przeprowadzonych szkoleń w roku względem TrainingCompany.
+ * 16. Średni wiek pracownika na podanym stanowisku wg oddziału.
  * 
  * @author Michal
  *
@@ -39,9 +45,13 @@ public class DBReport {
        GUIQueries queries = new GUIQueries();
        queries.init();
        ObjectContainer db = dbReport.dbconn.getConnection();
+       Calendar cal = Calendar.getInstance();
+       cal.set(2013, 10, 1);
 //       Collection<Training> trainings = #{ db.( Training ) };
-//       Collection<Company> res1 = dbReport.report1((Training)(trainings.toArray()[0]));
+//       Collection<Company> res1 = dbReport.report1((Training)(trainings.toArray()[0]).getName());
 //       System.out.println("Report 1 = " + res1);
+//       Collection<Struct> res2 = dbReport.report2(cal.getTime());
+//       System.out.println("Report 2 = " + res2);
 //       Collection<Struct> res3 = dbReport.report3((Company)(queries.getCompanyClass("headquaters nr 0").toArray()[0]), 2013, 10);
 //       System.out.println("Report 3 = " + res3);
 //       Collection<Company> res4 = dbReport.report4(10);
@@ -58,8 +68,18 @@ public class DBReport {
 //       System.out.println("Report 9 = " + res9);
 //       Collection<Struct> res10 = dbReport.report10(10);
 //       System.out.println("Report 10 = " + res10);
-       Collection<Struct> res11 = dbReport.report11(25);
-       System.out.println("Report 11 = " + res11);
+//       Collection<Struct> res11 = dbReport.report11(25);
+//       System.out.println("Report 11 = " + res11);
+//       Collection<Struct> res12 = dbReport.report12((Company)(queries.getCompanyClass("headquaters nr 0").toArray()[0]), cal.getTime());
+//       System.out.println("Report 12 = " + res12);
+//       Collection<Struct> res13 = dbReport.report13(cal.getTime());
+//       System.out.println("Report 13 = " + res13);
+//       Collection<Struct> res14 = dbReport.report14(cal.getTime());
+//       System.out.println("Report 14 = " + res14);
+//       Collection<Struct> res15 = dbReport.report15(cal.getTime());
+//       System.out.println("Report 15 = " + res15);
+       Collection<Struct> res16 = dbReport.report16("Manager");
+       System.out.println("Report 16 = " + res16);
        dbReport.close();
     }
     
@@ -75,17 +95,41 @@ public class DBReport {
     /**
      * 1. Oddziały firmy, w których żaden pracownik nie ma szkolenia x. 
      */
-    public Collection<Company> report1(Training tt) {
+    public Collection<Company> report1(String tName) {
         ObjectContainer db = dbconn.getConnection();
-        Collection<Company> res = #{ db.( Company as c where not exists (TrainingAssignment where labor.worksAt == c and training == tt)) };
+        Collection<Company> res = #{ db.( Company as c where not exists (TrainingAssignment where labor.worksAt == c and training.name == tName)) };
+        return res;
+    }
+    
+    /**
+     * 2. Liczba wypożyczonych samochodów w oddziałach w danym dniu miesiąca. 
+     */
+    public Collection<Struct> report2(Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        int month = paramCal.get(Calendar.MONTH);
+        int day = paramCal.get(Calendar.DAY_OF_MONTH);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, month, day, 0, 0);
+        end.set(year, month, day, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Struct> res = #{ db.( (Company as comp).(comp.name, ((Car where owner == comp) as c).(count(RentCar where car == c and date.time > beginDate.time and date.time < endDate.time))) ) };
         return res;
     }
     
     /**
      * 3. Utylizacja samochodów w danym oddziale dla miesiąca x. (ile % miesiąca były używane) 
      */
-    public Collection<Struct> report3(Company company, int year, int month) {
+    public Collection<Struct> report3(Company company, Date paramDate) {
         ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        int month = paramCal.get(Calendar.MONTH);
         Calendar begin = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         begin.set(year, month, 1, 0, 0);
@@ -179,6 +223,89 @@ public class DBReport {
         long milisInYear = 365l * 24l * 3600l * 1000l;
         Date today = new Date();
         Collection<Struct> res = #{ db.( (Company as c where exists (Labor where worksAt == c and sex == 'M' and today.time - birthDate.time < milisInYear*age)).(c, count(Labor where worksAt == c and sex == 'M' and today.time - birthDate.time < milisInYear*age) ) ) };
+        return res;
+    }
+    
+    /**
+     * 12. Liczba szkoleń na pracownika oddziału w danym roku. 
+     */
+    public Collection<Struct> report12(Company comp, Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, 1, 1, 0, 0);
+        end.set(year, 12, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Struct> res = #{ db.( ((Labor where worksAt == comp) as l).(l, count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        return res;
+    }
+    
+    /**
+     * 13. Liczba przeprowadzonych szkoleń w roku względem produktu. 
+     */
+    public Collection<Struct> report13(Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, 1, 1, 0, 0);
+        end.set(year, 12, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Struct> res = #{ db.( (TrainingProduct as tp).(tp, count(TrainingAssignment where training.trainingProduct == tp and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        return res;
+    }
+    
+    /**
+     * 14. Liczba przeprowadzonych szkoleń w roku względem szkolenia. 
+     */
+    public Collection<Struct> report14(Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, 1, 1, 0, 0);
+        end.set(year, 12, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Struct> res = #{ db.( (Training as t).(t, count(TrainingAssignment where training == t and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        return res;
+    }
+    
+    /**
+     * 15. Liczba przeprowadzonych szkoleń w roku względem TrainingCompany. 
+     */
+    public Collection<Struct> report15(Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, 1, 1, 0, 0);
+        end.set(year, 12, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Struct> res = #{ db.( (TrainingCompany as tc).(tc, count(TrainingAssignment where training.trainingCompany == tc and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        return res;
+    }
+    
+    /**
+     * 16. Średni wiek pracownika na podanym stanowisku wg oddziału. 
+     */
+    public Collection<Struct> report16(String titleName) {
+        ObjectContainer db = dbconn.getConnection();
+        long milisInYear = 365l * 24l * 3600l * 1000l;
+        Date today = new Date();
+        Collection<Struct> res = #{ db.( (Company as c).(c.name, avg( (Labor where worksAt == c and title.name == titleName).((today.time - birthDate.time)/milisInYear))  )) };
         return res;
     }
 
