@@ -67,4 +67,9 @@ public class GUIQueries {
     	return res;
     }
     
+        public Collection<String> getTrainingName(){
+    	Collection<String> res = #{ db.(Training.name) };
+    	return res;
+    }
+    
 }

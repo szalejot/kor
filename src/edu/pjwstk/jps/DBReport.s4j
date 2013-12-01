@@ -105,6 +105,7 @@ public class DBReport {
      * 2. Liczba wypożyczonych samochodów w oddziałach w danym dniu miesiąca. 
      */
     public Collection<Struct> report2(Date paramDate) {
+    public Collection<Company> report1(String tName) {
         ObjectContainer db = dbconn.getConnection();
         Calendar paramCal = Calendar.getInstance();
         paramCal.setTime(paramDate);
@@ -118,6 +119,7 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (Company as comp).(comp.name, ((Car where owner == comp) as c).(count(RentCar where car == c and date.time > beginDate.time and date.time < endDate.time))) ) };
+        Collection<Company> res = #{ db.( Company as c where not exists (TrainingAssignment where labor.worksAt == c and training.name == tName)) };
         return res;
     }
     
