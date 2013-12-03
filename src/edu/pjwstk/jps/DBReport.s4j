@@ -105,7 +105,6 @@ public class DBReport {
      * 2. Liczba wypożyczonych samochodów w oddziałach w danym dniu miesiąca. 
      */
     public Collection<Struct> report2(Date paramDate) {
-    public Collection<Company> report1(String tName) {
         ObjectContainer db = dbconn.getConnection();
         Calendar paramCal = Calendar.getInstance();
         paramCal.setTime(paramDate);
@@ -119,14 +118,13 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (Company as comp).(comp.name, ((Car where owner == comp) as c).(count(RentCar where car == c and date.time > beginDate.time and date.time < endDate.time))) ) };
-        Collection<Company> res = #{ db.( Company as c where not exists (TrainingAssignment where labor.worksAt == c and training.name == tName)) };
         return res;
     }
     
     /**
      * 3. Utylizacja samochodów w danym oddziale dla miesiąca x. (ile % miesiąca były używane) 
      */
-    public Collection<Struct> report3(Company company, Date paramDate) {
+    public Collection<Struct> report3(String companyName, Date paramDate) {
         ObjectContainer db = dbconn.getConnection();
         Calendar paramCal = Calendar.getInstance();
         paramCal.setTime(paramDate);
@@ -139,7 +137,7 @@ public class DBReport {
         end.set(year, month, (int)daysInMonth, 23, 59);
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
-        Collection<Struct> res = #{ db.( ((Car where owner == company) as c).(c, count(RentCar where car == c and date.time > beginDate.time and date.time < endDate.time )*100/daysInMonth) ) };
+        Collection<Struct> res = #{ db.( ((Car where owner.name == companyName) as c).(c, count(RentCar where car == c and date.time > beginDate.time and date.time < endDate.time )*100/daysInMonth) ) };
         return res;
     }
     
@@ -231,7 +229,7 @@ public class DBReport {
     /**
      * 12. Liczba szkoleń na pracownika oddziału w danym roku. 
      */
-    public Collection<Struct> report12(Company comp, Date paramDate) {
+    public Collection<Struct> report12(String companyName, Date paramDate) {
         ObjectContainer db = dbconn.getConnection();
         Calendar paramCal = Calendar.getInstance();
         paramCal.setTime(paramDate);
@@ -242,7 +240,7 @@ public class DBReport {
         end.set(year, 12, 31, 23, 59);
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
-        Collection<Struct> res = #{ db.( ((Labor where worksAt == comp) as l).(l, count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        Collection<Struct> res = #{ db.( ((Labor where worksAt.name == companyName) as l).(l, count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
         return res;
     }
     
