@@ -21,7 +21,7 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car[model=" + type + ", color=" + color  + ", year=" + prodDate + "]";
+        return "Car[nr="+ nr + ", model=" + type + ", color=" + color  + ", year=" + prodDate + "]";
     }
 
     public String getType() {

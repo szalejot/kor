@@ -63,13 +63,32 @@ public class GUIQueries {
     
     
     public Collection<String> getInnerCompany(String owner){
-    	Collection<String> res = #{ db.(Company as c).(c.name where c.partOf.name == owner) };
+    	Collection<String> res = #{ db.((Company where partOf.name == owner).name) };
     	return res;
     }
     
-        public Collection<String> getTrainingName(){
+    public Collection<String> getTrainingName(){
     	Collection<String> res = #{ db.(Training.name) };
     	return res;
     }
-    
+        public Collection<Training> getTrainingClass(String text){
+    	Collection<Training> res = #{ db.(Training where name == text) };
+    	return res;
+    }
+    public Collection<Struct> getLaborName(){
+    	Collection<Struct> res = #{ db.(Labor.(lastName,firstName)) };
+    	return res;
+    }
+        public Collection<Labor> getLaborClass(String last, String first){
+    	Collection<Labor> res = #{ db.(Labor where lastName == last and firstName == first) };
+    	return res;
+    }
+    public Collection<Struct> getCarName(){
+    	Collection<Struct> res = #{ db.(Car.(nr,type,manufacturer)) };
+    	return res;
+    }
+    public Collection<Car> getCarClass(Integer number){
+    	Collection<Car> res = #{ db.(Car where nr == number) };
+    	return res;
+    }
 }

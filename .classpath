@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="lib/junit-4.8.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/db4o_sbql4j_20111011.jar"/>
 	<classpathentry kind="lib" path="lib/sbql4j_0.951_xml.jar"/>
+	<classpathentry kind="lib" path="lib/swingx-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
