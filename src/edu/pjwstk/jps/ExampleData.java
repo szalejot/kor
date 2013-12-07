@@ -21,6 +21,8 @@ public class ExampleData {
     private static int NUM_OF_LABOR_PER_COMP = 30;
     private static int NUM_OF_CARS_PER_COMP = 10;
     private static int NUM_OF_RENTS_PER_COMP = 3000;
+    
+    private static int carNr = 1;
 
     private List<Car> cars;
     private List<Company> companies;
@@ -290,12 +292,12 @@ public class ExampleData {
         Date today = new Date();
         
         for (int i = 0; i < NUM_OF_CARS_PER_COMP; i++) {
-            int nr = rand.nextInt(100);
             String manufacturer = manufacturers.get(rand.nextInt(manufacturers.size()));
             String type = types.get(rand.nextInt(types.size()));
             String color = colors.get(rand.nextInt(colors.size()));
             Date prodDate = new Date(today.getTime() - rand.nextInt(5000) * milisInDay);
-            result.add(new Car(nr, manufacturer, type, color, prodDate, company));
+            result.add(new Car(carNr, manufacturer, type, color, prodDate, company));
+            carNr++;
         }
         
         return result;

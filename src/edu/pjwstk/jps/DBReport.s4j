@@ -18,16 +18,26 @@ import com.db4o.*;
  *  4. Oddziały firmy których dyrektor pracuje dłużej niż x lat.
  *  5. Średnia długość stażu pracownika z rozbiciem na oddziały.
  *  6. Liczba pracowników w poszczególnych oddziałach firmy. 
- *  7. Wylistuj pracowników którzy nie mieli awansu od x lat
+ *  7. Wylistuj pracowników którzy nie mieli awansu od x lat.
  *  8. Lista pracowników na stanowiskach zarządczych
- *  9. Średnia liczba szkoleń na pracownika w poszczególnych oddziałach firmy
- * 10. Lista samochodów starszych niż x lat w poszczególnych oddziałach firmy
+ *  9. Średnia liczba szkoleń na pracownika w poszczególnych oddziałach firmy.
+ * 10. Lista samochodów starszych niż x lat w poszczególnych oddziałach firmy.
  * 11. Lista oddziałów w których pracują kobiety młodsze niż x lat i ich liczba.
  * 12. Liczba szkoleń na pracownika oddziału w danym roku.
  * 13. Liczba przeprowadzonych szkoleń w roku względem produktu.
  * 14. Liczba przeprowadzonych szkoleń w roku względem szkolenia.
  * 15. Liczba przeprowadzonych szkoleń w roku względem TrainingCompany.
  * 16. Średni wiek pracownika na podanym stanowisku wg oddziału.
+ * 17. Historia użytkowania samochodu przez pracownika x.
+ * 18. Historia uczęszczanych kursów przez pracownika x.
+ * 19. Historia użytkowania samochodu x.
+ * 20. Lista użytkowników samochodu x na miesiąc y.
+ * 21. Lista zaplanowanych wypozyczen samochodów Company x na miesiąc y.
+ * 22. Lista zaplanowanych kursów w oddziale x na rok y z rozbiciem na pracowników.
+ * 23. Liczba wypożyczeń samochodów w roku x ze względu na markę.
+ * 24. Lista firm przeprowadzających szkolenia z danego produktu.
+ * 25. Średnia liczba wypożyczeń na pracownika w miesiącu x względem Company.
+ * 26. Średnia liczba szkoleń na pracownika w roku x z rozbiciem na Company i płeć pracownika.
  * 
  * @author Michal
  *
@@ -78,8 +88,24 @@ public class DBReport {
 //       System.out.println("Report 14 = " + res14);
 //       Collection<Struct> res15 = dbReport.report15(cal.getTime());
 //       System.out.println("Report 15 = " + res15);
-       Collection<Struct> res16 = dbReport.report16("Manager");
-       System.out.println("Report 16 = " + res16);
+//       Collection<Struct> res16 = dbReport.report16("Manager");
+//       System.out.println("Report 16 = " + res16);
+//       Collection<RentCar> res17 = dbReport.report17(((Company)(queries.getCompanyClass("headquaters nr 0").toArray()[0])).getDirector());
+//       System.out.println("Report 17 = " + res17);
+//       Collection<TrainingAssignment> res18 = dbReport.report18(((Company)(queries.getCompanyClass("headquaters nr 0").toArray()[0])).getDirector());
+//       System.out.println("Report 18 = " + res18);
+//       Collection<RentCar> res19 = dbReport.report19(1);
+//       System.out.println("Report 19 = " + res19);
+//       Collection<Labor> res20 = dbReport.report20(1, cal.getTime());
+//       System.out.println("Report 20 = " + res20);
+//       Collection<RentCar> res21 = dbReport.report21("headquaters nr 0", cal.getTime());
+//       System.out.println("Report 21 = " + res21);
+//       Collection<Struct> res22 = dbReport.report22("headquaters nr 0", cal.getTime());
+//       System.out.println("Report 22 = " + res22);
+//       Collection<Struct> res23 = dbReport.report23(cal.getTime());
+//       System.out.println("Report 23 = " + res23);
+       Collection<TrainingCompany> res24 = dbReport.report24("Consulting");
+       System.out.println("Report 24 = " + res24);
        dbReport.close();
     }
     
@@ -306,6 +332,117 @@ public class DBReport {
         long milisInYear = 365l * 24l * 3600l * 1000l;
         Date today = new Date();
         Collection<Struct> res = #{ db.( (Company as c).(c.name, avg( (Labor where worksAt == c and title.name == titleName).((today.time - birthDate.time)/milisInYear))  )) };
+        return res;
+    }
+    
+    /**
+     * 17. Historia użytkowania samochodu przez pracownika x. 
+     */
+    public Collection<RentCar> report17(Labor ll) {
+        ObjectContainer db = dbconn.getConnection();
+        Collection<RentCar> res = #{ db.( RentCar where labor == ll ) };
+        return res;
+    }
+    
+    /**
+     * 18. Historia uczęszczanych kursów przez pracownika x. 
+     */
+    public Collection<TrainingAssignment> report18(Labor ll) {
+        ObjectContainer db = dbconn.getConnection();
+        Collection<TrainingAssignment> res = #{ db.( TrainingAssignment where labor == ll ) };
+        return res;
+    }
+    
+    /**
+     * 19. Historia użytkowania samochodu x. 
+     */
+    public Collection<RentCar> report19(int carNr) {
+        ObjectContainer db = dbconn.getConnection();
+        Collection<RentCar> res = #{ db.( RentCar where car.nr == carNr ) };
+        return res;
+    }
+    
+    /**
+     * 20. Lista użytkowników samochodu x na miesiąc y. 
+     */
+    public Collection<Labor> report20(int carNr, Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        int month = paramCal.get(Calendar.MONTH);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, month, 1, 0, 0);
+        end.set(year, month, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Labor> res = #{ db.( (RentCar where date > beginDate and date.time < endDate.time).labor ) };
+        return res;
+    }
+    
+    /**
+     * 21. Lista zaplanowanych wypozyczen samochodów Company x na miesiąc y.
+     */
+    public Collection<RentCar> report21(String companyName, Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        int month = paramCal.get(Calendar.MONTH);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, month, 1, 0, 0);
+        end.set(year, month, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<RentCar> res = #{ db.( RentCar where labor.worksAt.name == companyName and date.time > beginDate.time and date.time < endDate.time ) };
+        return res;
+    }
+    
+    /**
+     * 22. Lista zaplanowanych kursów w oddziale x na rok y z rozbiciem na pracowników.
+     */
+    public Collection<Struct> report22(String companyName, Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, 1, 1, 0, 0);
+        end.set(year, 12, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Struct> res = #{ db.( ((Labor where worksAt.name == companyName) as l).(l, (TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        return res;
+    }
+    
+    /**
+     * 23. Liczba wypożyczeń samochodów w roku x ze względu na markę.
+     */
+    public Collection<Struct> report23(Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, 1, 1, 0, 0);
+        end.set(year, 12, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        //TODO
+        Collection<Struct> res = #{ db.( (Car.manufacturer as m).(m, count(RentCar where car.manufacturer == m and date.time > beginDate.time and date.time < endDate.time)) ) };
+        return res;
+    }
+    
+    /**
+     * 24. Lista firm przeprowadzających szkolenia z danego produktu. 
+     */
+    public Collection<TrainingCompany> report24(String productName) {
+        ObjectContainer db = dbconn.getConnection();
+        Collection<TrainingCompany> res = #{ db.( TrainingCompany as tc where exists (Training where trainingProduct.fullName == productName and trainingCompany == tc) ) };
         return res;
     }
 
