@@ -64,7 +64,7 @@ public class MenuMain implements ActionListener {
         // adding menu with persons to menu bar
         menuBar.add(menu2);
 
-        createReportButton("AddItem", "addDepartment", menu2);
+        createReportButton("Add Person", "addPerson", menu2);
 
         menu2.addSeparator();
         // a submenu of reports for persons
@@ -84,7 +84,8 @@ public class MenuMain implements ActionListener {
         // adding menu with cars to menu bar
         menuBar.add(menu3);
 
-        createReportButton("AddItem", "addCar", menu3);
+        createReportButton("Add Car", "addCar", menu3);
+        createReportButton("Assign Car", "assignCar", menu3);
 
         menu3.addSeparator();
         // a submenu of cars with reports
@@ -104,7 +105,8 @@ public class MenuMain implements ActionListener {
         // adding menu with cars to menu bar
         menuBar.add(menu4);
 
-        createReportButton("AddItem", "addTraining", menu4);
+        createReportButton("Add Training", "addTraining", menu4);
+        createReportButton("Assign Training", "assignTraining", menu4);
 
         menu4.addSeparator();
         // a submenu of cars with reports
@@ -133,6 +135,16 @@ public class MenuMain implements ActionListener {
         case "addCompany":
             newInputPanel = new CreateInputPanel();
             newInputPanel.createInputCompany();
+            repaintFrame(newInputPanel);
+            break;
+        case "assignTraining":
+            newInputPanel = new CreateInputPanel();
+            newInputPanel.createAssign("training");
+            repaintFrame(newInputPanel);
+            break;
+        case "assignCar":
+            newInputPanel = new CreateInputPanel();
+            newInputPanel.createAssign("car");
             repaintFrame(newInputPanel);
             break;
         case "report1":
@@ -246,7 +258,7 @@ public class MenuMain implements ActionListener {
         frame.repaint();
     }
 
-    //need to change this method becouse canceling input also shows it is not a number you ....
+    //need to change this method because canceling input also shows it is not a number you ....
     public Object getUserInput(int nrReport) {
         Boolean number = false;
         Integer i = 0;

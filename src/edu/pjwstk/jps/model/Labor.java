@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class Labor {
 
-    private String fName;
-    private String lName;
+    private String firstName;
+    private String lastName;
     private Date birthDate;
     private Character sex; // M or F
     private Double salary;
@@ -18,8 +18,8 @@ public class Labor {
     public Labor(String fName, String lName, Date birthDate, Character sex, Company worksAt, Title title,
             Double salary,Date hasTitleSince, Date workSince) {
         super();
-        this.fName = fName;
-        this.lName = lName;
+        this.firstName = fName;
+        this.lastName = lName;
         this.birthDate = birthDate;
         this.sex = sex;
         this.title = title;
@@ -29,20 +29,20 @@ public class Labor {
         this.worksAt = worksAt;
     }
 
-    public String getfName() {
-        return fName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setfName(String fName) {
-        this.fName = fName;
+    public void setFirstName(String fName) {
+        this.firstName = fName;
     }
 
-    public String getlName() {
-        return lName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setlName(String lName) {
-        this.lName = lName;
+    public void setLastName(String lName) {
+        this.lastName = lName;
     }
 
     public Double getSalary() {
@@ -92,7 +92,7 @@ public class Labor {
     @Override
     public String toString() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        return "Labor [fName=" + fName + ", lName=" + lName + ", birthDate=" + birthDate + ", sex=" + sex + ", salary="
+        return "Labor [fName=" + firstName + ", lName=" + lastName + ", birthDate=" + birthDate + ", sex=" + sex + ", salary="
                 + salary + ", workSince=" + df.format(workSince) + ", title=" + title + ", worksAt=" + worksAt
                 + "]";
     }

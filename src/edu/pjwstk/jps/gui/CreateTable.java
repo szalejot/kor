@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import pl.wcislo.sbql4j.java.model.runtime.Struct;
 
 enum classTypes {
-    Car, Company, CompanyBranch, Labor, RentCarmTitle, Training, TrainingAssignment, TrainingCompany, TrainingProduct
+    Car, Company, CompanyBranch, Labor, RentCar, Title, Training, TrainingAssignment, TrainingCompany, TrainingProduct
 }
 
 public class CreateTable extends AbstractTableModel {
@@ -178,46 +178,8 @@ public class CreateTable extends AbstractTableModel {
         return columnClass;
     }
 
-    // After that would be methods for editing cells at jtable, for future
-    // development
+    @Override
     public Object getValueAt(int row, int col) {
         return tableData[row][col];
-    }
-
-    public boolean isCellEditable(int row, int col) {
-        if (col < 2) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public void setValueAt(Object value, int row, int col) {
-        if (DEBUG) {
-            System.out.println("Setting value at " + row + "," + col + " to " + value + " (an instance of "
-                    + value.getClass() + ")");
-        }
-
-        tableData[row][col] = value;
-        fireTableCellUpdated(row, col);
-
-        if (DEBUG) {
-            System.out.println("New value of data:");
-            printDebugData();
-        }
-    }
-
-    private void printDebugData() {
-        int numRows = getRowCount();
-        int numCols = getColumnCount();
-
-        for (int i = 0; i < numRows; i++) {
-            System.out.print("    row " + i + ":");
-            for (int j = 0; j < numCols; j++) {
-                System.out.print("  " + tableData[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.println("--------------------------");
     }
 }
