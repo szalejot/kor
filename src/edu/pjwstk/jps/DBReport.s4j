@@ -104,8 +104,12 @@ public class DBReport {
 //       System.out.println("Report 22 = " + res22);
 //       Collection<Struct> res23 = dbReport.report23(cal.getTime());
 //       System.out.println("Report 23 = " + res23);
-       Collection<TrainingCompany> res24 = dbReport.report24("Consulting");
-       System.out.println("Report 24 = " + res24);
+//       Collection<TrainingCompany> res24 = dbReport.report24("Consulting");
+//       System.out.println("Report 24 = " + res24);
+//       Collection<Struct> res25 = dbReport.report25(cal.getTime());
+//       System.out.println("Report 25 = " + res25);
+       Collection<Struct> res26 = dbReport.report26(cal.getTime());
+       System.out.println("Report 26 = " + res26);
        dbReport.close();
     }
     
@@ -379,7 +383,7 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         int carNrInt = Integer.parseInt(carNr);
-        Collection<Labor> res = #{ db.( (RentCar where car.nr == carNrInt and date > beginDate and date.time < endDate.time).labor ) };
+        Collection<Labor> res = #{ db.( unique((RentCar where car.nr == carNrInt and date > beginDate and date.time < endDate.time).labor) ) };
         return res;
     }
     
@@ -434,8 +438,7 @@ public class DBReport {
         end.set(year, 12, 31, 23, 59);
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
-        //TODO
-        Collection<Struct> res = #{ db.( (Car.manufacturer as m).(m, count(RentCar where car.manufacturer == m and date.time > beginDate.time and date.time < endDate.time)) ) };
+        Collection<Struct> res = #{ db.( (unique(Car.manufacturer as m)).(m, count(RentCar where car.manufacturer == m and date.time > beginDate.time and date.time < endDate.time)) ) };
         return res;
     }
     
@@ -445,6 +448,43 @@ public class DBReport {
     public Collection<TrainingCompany> report24(String productName) {
         ObjectContainer db = dbconn.getConnection();
         Collection<TrainingCompany> res = #{ db.( TrainingCompany as tc where exists (Training where trainingProduct.fullName == productName and trainingCompany == tc) ) };
+        return res;
+    }
+    
+    /**
+     * 25. Średnia liczba wypożyczeń na pracownika w miesiącu x względem Company.
+     */
+    public Collection<Struct> report25(Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        int month = paramCal.get(Calendar.MONTH);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, month, 1, 0, 0);
+        end.set(year, month, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Struct> res = #{ db.( (Company as comp).(comp, avg( ((Labor where worksAt == comp) as l).(count(RentCar where labor == l and date.time > beginDate.time and date.time < endDate.time)) ) )) };
+        return res;
+    }
+    
+    /**
+     * 26. Średnia liczba szkoleń na pracownika w roku x z rozbiciem na Company i płeć pracownika.
+     */
+    public Collection<Struct> report26(Date paramDate) {
+        ObjectContainer db = dbconn.getConnection();
+        Calendar paramCal = Calendar.getInstance();
+        paramCal.setTime(paramDate);
+        int year = paramCal.get(Calendar.YEAR);
+        Calendar begin = Calendar.getInstance();
+        Calendar end = Calendar.getInstance();
+        begin.set(year, 1, 1, 0, 0);
+        end.set(year, 12, 31, 23, 59);
+        Date beginDate = new Date(begin.getTimeInMillis());
+        Date endDate = new Date(end.getTimeInMillis());
+        Collection<Struct> res = #{ db.( (Company as comp).(comp, avg( ((Labor where worksAt == comp and sex == 'M') as l).(count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ), avg( ((Labor where worksAt == comp and sex == 'F') as l).(count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ) )) };
         return res;
     }
 
