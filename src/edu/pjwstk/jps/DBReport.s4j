@@ -96,7 +96,7 @@ public class DBReport {
 //       System.out.println("Report 18 = " + res18);
 //       Collection<RentCar> res19 = dbReport.report19(1);
 //       System.out.println("Report 19 = " + res19);
-//       Collection<Labor> res20 = dbReport.report20(1, cal.getTime());
+//       Collection<Labor> res20 = dbReport.report20("1", cal.getTime());
 //       System.out.println("Report 20 = " + res20);
 //       Collection<RentCar> res21 = dbReport.report21("headquaters nr 0", cal.getTime());
 //       System.out.println("Report 21 = " + res21);
@@ -356,9 +356,10 @@ public class DBReport {
     /**
      * 19. Historia użytkowania samochodu x. 
      */
-    public Collection<RentCar> report19(int carNr) {
+    public Collection<RentCar> report19(String carNr) {
         ObjectContainer db = dbconn.getConnection();
-        Collection<RentCar> res = #{ db.( RentCar where car.nr == carNr ) };
+        int carNrInt = Integer.parseInt(carNr);
+        Collection<RentCar> res = #{ db.( RentCar where car.nr == carNrInt ) };
         return res;
     }
     
