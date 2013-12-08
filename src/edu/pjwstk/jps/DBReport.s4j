@@ -365,7 +365,7 @@ public class DBReport {
     /**
      * 20. Lista użytkowników samochodu x na miesiąc y. 
      */
-    public Collection<Labor> report20(int carNr, Date paramDate) {
+    public Collection<Labor> report20(String carNr, Date paramDate) {
         ObjectContainer db = dbconn.getConnection();
         Calendar paramCal = Calendar.getInstance();
         paramCal.setTime(paramDate);
@@ -377,7 +377,8 @@ public class DBReport {
         end.set(year, month, 31, 23, 59);
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
-        Collection<Labor> res = #{ db.( (RentCar where date > beginDate and date.time < endDate.time).labor ) };
+        int carNrInt = Integer.parseInt(carNr);
+        Collection<Labor> res = #{ db.( (RentCar where car.nr == carNrInt and date > beginDate and date.time < endDate.time).labor ) };
         return res;
     }
     
