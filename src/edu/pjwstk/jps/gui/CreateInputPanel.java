@@ -39,6 +39,10 @@ import edu.pjwstk.jps.model.Training;
 import edu.pjwstk.jps.model.TrainingAssignment;
 
 public class CreateInputPanel extends JPanel implements ActionListener, ItemListener{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     private GridBagConstraints c;
     private GUIQueries queryGUI;
     private Collection<?> resultSet;

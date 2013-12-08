@@ -49,11 +49,15 @@ public class GUIQueries {
     	Collection<CompanyBranch> res = #{ db.(CompanyBranch where name == branch ) };
     	return res;
     }
-    
+ 
     public Collection<String> getCompany(String branch){
     	//Collection<String> res = #{ db.(Company as c).(c.name where c.type.name == branch) };
     	Collection<String> res = #{ db.((Company where type.name == branch).name) };
     	
+    	return res;
+    }
+    public Collection<String> getCompanyName(){
+    	Collection<String> res = #{ db.(Company.name)};  	
     	return res;
     }
     public Collection<Company> getCompanyClass(String comp){
@@ -89,6 +93,14 @@ public class GUIQueries {
     }
     public Collection<Car> getCarClass(Integer number){
     	Collection<Car> res = #{ db.(Car where nr == number) };
+    	return res;
+    }
+    public Collection<String> getTitleName(){
+    	Collection<String> res = #{ db.(Title.name) };
+    	return res;
+    }
+    public Collection<String> getTrainingProductName(){
+    	Collection<String> res = #{ db.(TrainingProduct.fullName) };
     	return res;
     }
 }
