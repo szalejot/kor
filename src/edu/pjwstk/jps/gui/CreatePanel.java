@@ -11,7 +11,15 @@ import java.util.Collection;
 
 public class CreatePanel extends JPanel {
 
-    private JLabel count;
+    public JLabel count;
+
+    public JLabel getCount() {
+        return count;
+    }
+
+    public void setCount(JLabel count) {
+        this.count = count;
+    }
 
     private static final long serialVersionUID = -4225320954622494059L;
     private GridBagConstraints c;

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -35,8 +36,11 @@ import edu.pjwstk.jps.model.Company;
 import edu.pjwstk.jps.model.CompanyBranch;
 import edu.pjwstk.jps.model.Labor;
 import edu.pjwstk.jps.model.RentCar;
+import edu.pjwstk.jps.model.Title;
 import edu.pjwstk.jps.model.Training;
 import edu.pjwstk.jps.model.TrainingAssignment;
+import edu.pjwstk.jps.model.TrainingCompany;
+import edu.pjwstk.jps.model.TrainingProduct;
 
 public class CreateInputPanel extends JPanel implements ActionListener, ItemListener{
     /**
@@ -290,7 +294,7 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
                    errorAssign.setVisible(true);
                    errorAssign.setText("You must choose all fields");
                }else{
-                   
+                   if(!pickDate.getDate().before(Calendar.getInstance().getTime())){
                    String strCarsCB = (String) carsCB.getSelectedItem();
                    String arrCarsCB[] = strCarsCB.split(" ");
                    Integer number = Integer.valueOf(arrCarsCB[0]);
@@ -303,8 +307,12 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
                    ObjectContainer db = dbconn.getConnection();
                    db.store(toAdd);
                    db.commit();  
-                   errorAssign.setText("Poprawnie dodano obiekt: "+ toAdd + " do bazy danych.");
-                   errorAssign.setVisible(true);
+                   errorAssign.setText("Poprawnie dodano obiekt do bazy danych.");
+                   errorAssign.setVisible(true);}
+                   else{
+                       errorAssign.setVisible(true);
+                       errorAssign.setText("You can not choose date in past.");
+                   }
                }
            }
            else if(bt.getName().equals("assignTraining")){
@@ -313,15 +321,20 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
                    errorAssign.setVisible(true);
                    errorAssign.setText("You must choose all fields");
                }else{
-                   ArrayList<Training> tmpTraining = new ArrayList<Training>((Collection<Training>)getGUIQueriesResult(queryGUI, "getTrainingClass",trainingCB.getSelectedItem(),null ));
+                   if(!pickDate.getDate().before(Calendar.getInstance().getTime())){
+                   ArrayList<Training> tmpTraining = new ArrayList<Training>((Collection<Training>)getGUIQueriesResult(queryGUI, "getTrainingClass",trainingCB.getSelectedItem(),null ));                 
                    TrainingAssignment toAdd = new TrainingAssignment(getSelectedLabor(), tmpTraining.get(0), pickDate.getDate()) ;
                    System.out.println(toAdd);
                    DBConnector dbconn = new DBConnector();
                    ObjectContainer db = dbconn.getConnection();
                    db.store(toAdd);
                    db.commit();  
-                   errorAssign.setText("Poprawnie dodano obiekt: "+ toAdd + " do bazy danych.");
-                   errorAssign.setVisible(true);
+                   errorAssign.setText("Poprawnie dodano obiekt do bazy danych.");
+                   errorAssign.setVisible(true);}
+                   else{
+                       errorAssign.setVisible(true);
+                       errorAssign.setText("You can not choose date in past.");
+                   }
                }
            }
            else if(bt.getName().equals("addButton")){
@@ -437,6 +450,31 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
             break;
         }
         
+    }
+    public void createInputCar(){
+//        private Integer nr; textfield
+//        private String manufacturer; combobox z enuma
+//        private String type; comboboz z enuma
+//        private String color; combobox z enuma
+//        private Date prodDate; jxdatepicker
+//        private Company owner; combo box
+    }
+    public void createInputTraining(){
+//        String name; textfield
+//        TrainingCompany trainingCompany; cb
+//        TrainingProduct trainingProduct; cb
+//        Integer lenghtInDays; textfield
+    }
+    public void createInputLabor(){
+//        private String firstName; text
+//        private String lastName; text
+//        private Date birthDate; jxdate
+//        private Character sex; // M or F radiobutton
+//        private Double salary; text
+//        private Date workSince; jxdate
+//        private Title title; cb
+//        private Date hasTitleSince; jxdate
+//        private Company worksAt; cb
     }
 }
 
