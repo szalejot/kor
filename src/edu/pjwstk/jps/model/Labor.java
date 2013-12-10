@@ -91,9 +91,9 @@ public class Labor {
 
     @Override
     public String toString() {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return "Labor [fName=" + firstName + ", lName=" + lastName + ", birthDate=" + birthDate + ", sex=" + sex + ", salary="
-                + salary + ", workSince=" + df.format(workSince) + ", title=" + title + ", worksAt=" + worksAt
+                + salary + ", workSince=" + workSince + ", title=" + title + ", worksAt=" + worksAt
                 + "]";
     }
 

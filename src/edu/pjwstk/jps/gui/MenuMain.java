@@ -56,7 +56,9 @@ public class MenuMain implements ActionListener {
         createReportButton("Oddziały firmy, w których żaden pracownik nie ma szkolenia x.", "report1", submenu);
         createReportButton("Lista zaplanowanych wypozyczen samochodów oddzialu x na miesiąc y.", "report21", submenu);
         createReportButton("Lista zaplanowanych kursów w oddziale x na rok y z rozbiciem na pracowników.", "report22", submenu);
-        createReportButton("Liczba szkoleń na pracownika oddziału w danym roku..", "report12", submenu);
+        createReportButton("Liczba szkoleń na pracownika oddziału w danym roku.", "report12", submenu);
+        createReportButton("Łańcuch hierarchii od zadanego Company.", "report27", submenu);
+
         // adding submenu of reports to company menu
         menu.add(submenu);
 
@@ -108,6 +110,8 @@ public class MenuMain implements ActionListener {
                 submenu3);
         createReportButton("Liczba wypożyczeń samochodów w roku x ze względu na marke.", "report23",
                 submenu3);
+        createReportButton("Średnia liczba wypożyczeń na pracownika w miesiącu x względem Company.", "report25",
+                submenu3);
         // adding submenu of car reports to menu of cars
         menu3.add(submenu3);
 
@@ -134,6 +138,8 @@ public class MenuMain implements ActionListener {
         createReportButton("Liczba przeprowadzonych szkoleń w roku względem firmy szkoleniowej.", "report15",
                 submenu4);
         createReportButton("Lista firm przeprowadzających szkolenia z danego produktu.", "report24",
+                submenu4);
+        createReportButton("Średnia liczba szkoleń na pracownika w roku x z rozbiciem na Company i płeć pracownika.", "report26",
                 submenu4);
         // adding submenu of car reports to menu of cars
         menu4.add(submenu4);
@@ -311,6 +317,24 @@ public class MenuMain implements ActionListener {
             doReport(newPanel, 24, true,false);
             repaintFrame(newPanel);
             break;
+        case "report25":
+            newPanel = new CreatePanel();
+            repaintFrame(newPanel);
+            doReport(newPanel, 25, true,false);
+            repaintFrame(newPanel);
+            break;
+        case "report26":
+            newPanel = new CreatePanel();
+            repaintFrame(newPanel);
+            doReport(newPanel, 26, true,false);
+            repaintFrame(newPanel);
+            break;
+        case "report27":
+            newPanel = new CreatePanel();
+            repaintFrame(newPanel);
+            doReport(newPanel, 27, true,false);
+            repaintFrame(newPanel);
+            break;
         }
     }
 
@@ -405,14 +429,14 @@ public class MenuMain implements ActionListener {
         switch (nrReport){
         case 3:
         case 21:
-            arr = userInput.CreateCompanyDateDialog(2);
+            arr = userInput.createCompanyDateDialog(2);
             break;
         case 12:
         case 22:
-            arr = userInput.CreateCompanyDateDialog(1);
+            arr = userInput.createCompanyDateDialog(1);
             break;
         case 20:
-            arr = userInput.CreateCarDateDialog();
+            arr = userInput.createCarDateDialog();
             break;
         }
         return arr;
@@ -423,35 +447,42 @@ public class MenuMain implements ActionListener {
         userInput = new UserInput(frame);
         switch (nrReport){
         case 1:
-            ob = userInput.CreateTrainingDialog();
+            ob = userInput.createTrainingDialog();
             break;
         case 2:
-            ob = userInput.CreateDataDay();
+            ob = userInput.createDateDay();
+            break;
+        case 27:
+            ob = userInput.createCompanyDialog();
             break;
         case 13:
         case 14:
         case 15:
         case 23:
-            ob = userInput.CreateDataYear();
+        case 26:
+            ob = userInput.createDateYear();
+            break;
+        case 25:
+            ob = userInput.createDateMonth();
             break;
         case 16:
-            ob = userInput.CreateTitleDialog();
+            ob = userInput.createTitleDialog();
             break;
         case 17:
         case 18:
-            ob = userInput.CreateLaborDialog();
+            ob = userInput.createLaborDialog();
             break;
         case 19:
-            ob = userInput.CreateCarDialog();
+            ob = userInput.createCarDialog();
             break;
         case 24:
-            ob = userInput.CreateTrainingProductDialog();
+            ob = userInput.createTrainingProductDialog();
             break;
         case 4:
         case 7:
         case 10:
         case 11:
-            ob = userInput.CreateIntegerDialog();
+            ob = userInput.createIntegerDialog();
         }
         return ob;
     }

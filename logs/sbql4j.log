@@ -1,263 +1,269 @@
-2013-12-09 23:11:44,287 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,303 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where ! exists (TrainingAssignment where getLabor().getWorksAt() == c and getTraining().getName() == tName))
-2013-12-09 23:11:44,329 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:44,330 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where ! exists (TrainingAssignment where getLabor().getWorksAt() == c and getTraining().getName() == tName))
-2013-12-09 23:11:44,350 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:44,351 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where ! exists (TrainingAssignment where getLabor().getWorksAt() == c and getTraining().getName() == tName))
-2013-12-09 23:11:44,432 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,433 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp.getName(), ((Car where getOwner() == comp) as c).( count((RentCar where getCar() == c and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime()))))
-2013-12-09 23:11:44,464 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:44,465 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp.getName(), ((Car where getOwner() == comp) as c).( count((RentCar where getCar() == c and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime()))))
-2013-12-09 23:11:44,548 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:44,549 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(Company as comp).(comp.getName(), ((Car where getOwner() == comp) as c).( count((RentCar where getCar() == c and getDate().getTime() > _aux0 and getDate().getTime() < _aux1))))
-2013-12-09 23:11:44,587 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,588 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Car where getOwner().getName() == companyName) as c).(c,  count((RentCar where getCar() == c and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())) * 100/ daysInMonth)
-2013-12-09 23:11:44,613 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:44,614 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Car where getOwner().getName() == companyName) as c).(c,  count((RentCar where getCar() == c and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())) * 100/ daysInMonth)
-2013-12-09 23:11:44,681 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:44,683 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.((Car where getOwner().getName() == companyName) as c).(c,  count((RentCar where getCar() == c and getDate().getTime() > _aux0 and getDate().getTime() < _aux1)) * 100/ daysInMonth)
-2013-12-09 23:11:44,698 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,699 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getDirector().getWorkSince().getTime() < date.getTime())
-2013-12-09 23:11:44,710 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:44,711 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getDirector().getWorkSince().getTime() < date.getTime())
-2013-12-09 23:11:44,734 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:44,735 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (date.getTime() group as _aux0).db.(Company where getDirector().getWorkSince().getTime() < _aux0)
-2013-12-09 23:11:44,755 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,756 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c).((today.getTime() - getWorkSince().getTime())/ milisInYear)))
-2013-12-09 23:11:44,771 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:44,772 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c).((today.getTime() - getWorkSince().getTime())/ milisInYear)))
-2013-12-09 23:11:44,801 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:44,802 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (today.getTime() group as _aux0).db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c).((_aux0 - getWorkSince().getTime())/ milisInYear)))
-2013-12-09 23:11:44,812 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,813 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  count((Labor where getWorksAt() == c)))
-2013-12-09 23:11:44,819 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:44,820 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  count((Labor where getWorksAt() == c)))
-2013-12-09 23:11:44,826 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:44,827 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  count((Labor where getWorksAt() == c)))
-2013-12-09 23:11:44,841 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,842 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getHasTitleSince().getTime() < date.getTime())
-2013-12-09 23:11:44,853 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:44,854 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getHasTitleSince().getTime() < date.getTime())
-2013-12-09 23:11:44,875 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:44,876 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (date.getTime() group as _aux0).db.(Labor where getHasTitleSince().getTime() < _aux0)
-2013-12-09 23:11:44,884 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,885 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor as l where l.getWorksAt().getDirector() == l)
-2013-12-09 23:11:44,890 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:44,891 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor as l where l.getWorksAt().getDirector() == l)
-2013-12-09 23:11:44,896 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:44,897 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor as l where l.getWorksAt().getDirector() == l)
-2013-12-09 23:11:44,909 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,910 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor as l where l.getWorksAt() == c).( count((TrainingAssignment where getLabor() == l)))))
-2013-12-09 23:11:44,919 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:44,920 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor as l where l.getWorksAt() == c).( count((TrainingAssignment where getLabor() == l)))))
-2013-12-09 23:11:44,936 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:44,938 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor as l group as _aux0).(Company as c).(c.getName(),  avg((_aux0 where l.getWorksAt() == c).( count((TrainingAssignment where getLabor() == l)))))
-2013-12-09 23:11:44,996 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:44,997 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as com).(com, Car as c where c.getOwner() == com and c.getProdDate().getTime() < date.getTime())
-2013-12-09 23:11:45,013 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,015 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as com).(com, Car as c where c.getOwner() == com and c.getProdDate().getTime() < date.getTime())
-2013-12-09 23:11:45,062 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,064 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (date.getTime() group as _aux0).db.(Car as c group as _aux1).(Company as com).(com, _aux1 where c.getOwner() == com and c.getProdDate().getTime() < _aux0)
-2013-12-09 23:11:45,096 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,097 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where  exists (Labor where getWorksAt() == c and getSex() == 'M' and today.getTime() - getBirthDate().getTime() < milisInYear * age)).(c,  count((Labor where getWorksAt() == c and getSex() == 'M' and today.getTime() - getBirthDate().getTime() < milisInYear * age)))
-2013-12-09 23:11:45,128 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,130 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where  exists (Labor where getWorksAt() == c and getSex() == 'M' and today.getTime() - getBirthDate().getTime() < milisInYear * age)).(c,  count((Labor where getWorksAt() == c and getSex() == 'M' and today.getTime() - getBirthDate().getTime() < milisInYear * age)))
-2013-12-09 23:11:45,289 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,291 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (today.getTime() group as _aux0).((milisInYear * age) group as _aux1).(today.getTime() group as _aux2).((milisInYear * age) group as _aux3).db.(Company as c where  exists (Labor where getWorksAt() == c and getSex() == 'M' and _aux0 - getBirthDate().getTime() < _aux1)).(c,  count((Labor where getWorksAt() == c and getSex() == 'M' and _aux2 - getBirthDate().getTime() < _aux3)))
-2013-12-09 23:11:45,315 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,316 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Labor where getWorksAt().getName() == companyName) as l).(l,  count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,330 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,331 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Labor where getWorksAt().getName() == companyName) as l).(l,  count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,363 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,364 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.((Labor where getWorksAt().getName() == companyName) as l).(l,  count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))
-2013-12-09 23:11:45,383 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,384 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingProduct as tp).(tp,  count((TrainingAssignment where getTraining().getTrainingProduct() == tp and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,397 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,398 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingProduct as tp).(tp,  count((TrainingAssignment where getTraining().getTrainingProduct() == tp and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,423 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,424 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(TrainingProduct as tp).(tp,  count((TrainingAssignment where getTraining().getTrainingProduct() == tp and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))
-2013-12-09 23:11:45,436 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,437 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training as t).(t,  count((TrainingAssignment where getTraining() == t and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,445 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,446 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training as t).(t,  count((TrainingAssignment where getTraining() == t and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,475 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,476 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(Training as t).(t,  count((TrainingAssignment where getTraining() == t and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))
-2013-12-09 23:11:45,493 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,494 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc).(tc,  count((TrainingAssignment where getTraining().getTrainingCompany() == tc and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,506 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,508 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc).(tc,  count((TrainingAssignment where getTraining().getTrainingCompany() == tc and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,535 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,536 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(TrainingCompany as tc).(tc,  count((TrainingAssignment where getTraining().getTrainingCompany() == tc and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))
-2013-12-09 23:11:45,548 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,549 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c and getTitle().getName() == titleName).((today.getTime() - getBirthDate().getTime())/ milisInYear)))
-2013-12-09 23:11:45,557 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,559 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c and getTitle().getName() == titleName).((today.getTime() - getBirthDate().getTime())/ milisInYear)))
-2013-12-09 23:11:45,574 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,575 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (today.getTime() group as _aux0).db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c and getTitle().getName() == titleName).((_aux0 - getBirthDate().getTime())/ milisInYear)))
-2013-12-09 23:11:45,578 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,580 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor() == ll)
-2013-12-09 23:11:45,582 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,582 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor() == ll)
-2013-12-09 23:11:45,584 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,585 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor() == ll)
-2013-12-09 23:11:45,589 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,590 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingAssignment where getLabor() == ll)
-2013-12-09 23:11:45,593 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,593 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingAssignment where getLabor() == ll)
-2013-12-09 23:11:45,595 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,596 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingAssignment where getLabor() == ll)
-2013-12-09 23:11:45,600 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,601 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getCar().getNr() == carNrInt)
-2013-12-09 23:11:45,603 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,604 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getCar().getNr() == carNrInt)
-2013-12-09 23:11:45,606 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,606 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getCar().getNr() == carNrInt)
-2013-12-09 23:11:45,619 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,621 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.( unique (RentCar where getCar().getNr() == carNrInt and getDate() > beginDate and getDate().getTime() < endDate.getTime()).getLabor())
-2013-12-09 23:11:45,631 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,632 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.( unique (RentCar where getCar().getNr() == carNrInt and getDate() > beginDate and getDate().getTime() < endDate.getTime()).getLabor())
-2013-12-09 23:11:45,645 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,646 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (endDate.getTime() group as _aux0).db.( unique (RentCar where getCar().getNr() == carNrInt and getDate() > beginDate and getDate().getTime() < _aux0).getLabor())
-2013-12-09 23:11:45,662 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,663 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor().getWorksAt().getName() == companyName and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())
-2013-12-09 23:11:45,675 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,676 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor().getWorksAt().getName() == companyName and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())
-2013-12-09 23:11:45,709 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,710 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(RentCar where getLabor().getWorksAt().getName() == companyName and getDate().getTime() > _aux0 and getDate().getTime() < _aux1)
-2013-12-09 23:11:45,727 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,729 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Labor where getWorksAt().getName() == companyName) as l).(l, (TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime()))
-2013-12-09 23:11:45,740 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,742 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Labor where getWorksAt().getName() == companyName) as l).(l, (TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime()))
-2013-12-09 23:11:45,776 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,777 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.((Labor where getWorksAt().getName() == companyName) as l).(l, (TrainingAssignment where getLabor() == l and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1))
-2013-12-09 23:11:45,790 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,791 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.( unique (Car.getManufacturer() as m)).(m,  count((RentCar where getCar().getManufacturer() == m and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,799 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,800 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.( unique (Car.getManufacturer() as m)).(m,  count((RentCar where getCar().getManufacturer() == m and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())))
-2013-12-09 23:11:45,820 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,821 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.( unique (Car.getManufacturer() as m)).(m,  count((RentCar where getCar().getManufacturer() == m and getDate().getTime() > _aux0 and getDate().getTime() < _aux1)))
-2013-12-09 23:11:45,826 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,826 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc where  exists (Training where getTrainingProduct().getFullName() == productName and getTrainingCompany() == tc))
-2013-12-09 23:11:45,829 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,829 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc where  exists (Training where getTrainingProduct().getFullName() == productName and getTrainingCompany() == tc))
-2013-12-09 23:11:45,831 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,832 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc where  exists (Training where getTrainingProduct().getFullName() == productName and getTrainingCompany() == tc))
-2013-12-09 23:11:45,843 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,844 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp) as l).( count((RentCar where getLabor() == l and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())))))
-2013-12-09 23:11:45,850 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,852 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp) as l).( count((RentCar where getLabor() == l and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())))))
-2013-12-09 23:11:45,870 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,871 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp) as l).( count((RentCar where getLabor() == l and getDate().getTime() > _aux0 and getDate().getTime() < _aux1)))))
-2013-12-09 23:11:45,889 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:45,890 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp and getSex() == 'M') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))),  avg(((Labor where getWorksAt() == comp and getSex() == 'F') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))))
-2013-12-09 23:11:45,903 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:45,904 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp and getSex() == 'M') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))),  avg(((Labor where getWorksAt() == comp and getSex() == 'F') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))))
-2013-12-09 23:11:45,997 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:45,998 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).(beginDate.getTime() group as _aux2).(endDate.getTime() group as _aux3).db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp and getSex() == 'M') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))),  avg(((Labor where getWorksAt() == comp and getSex() == 'F') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > _aux2 and getStartDate().getTime() < _aux3)))))
-2013-12-09 23:11:46,007 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,008 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.CompanyBranch.getName()
-2013-12-09 23:11:46,010 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,011 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.CompanyBranch.getName()
-2013-12-09 23:11:46,012 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,013 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.CompanyBranch.getName()
-2013-12-09 23:11:46,015 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,016 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(CompanyBranch where getName() == branch)
-2013-12-09 23:11:46,018 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,018 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(CompanyBranch where getName() == branch)
-2013-12-09 23:11:46,020 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,020 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(CompanyBranch where getName() == branch)
-2013-12-09 23:11:46,024 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,025 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getType().getName() == branch).getName()
-2013-12-09 23:11:46,027 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,028 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getType().getName() == branch).getName()
-2013-12-09 23:11:46,031 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,032 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getType().getName() == branch).getName()
-2013-12-09 23:11:46,036 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,037 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Company.getName()
-2013-12-09 23:11:46,040 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,041 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Company.getName()
-2013-12-09 23:11:46,043 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,044 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Company.getName()
-2013-12-09 23:11:46,048 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,049 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getName() == comp)
-2013-12-09 23:11:46,051 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,051 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getName() == comp)
-2013-12-09 23:11:46,054 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,054 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getName() == comp)
-2013-12-09 23:11:46,058 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,060 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getPartOf().getName() == owner).getName()
-2013-12-09 23:11:46,064 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,065 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getPartOf().getName() == owner).getName()
-2013-12-09 23:11:46,068 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,069 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getPartOf().getName() == owner).getName()
-2013-12-09 23:11:46,072 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,073 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Training.getName()
-2013-12-09 23:11:46,075 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,076 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Training.getName()
-2013-12-09 23:11:46,077 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,078 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Training.getName()
-2013-12-09 23:11:46,081 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,082 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training where getName() == text)
-2013-12-09 23:11:46,084 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,085 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training where getName() == text)
-2013-12-09 23:11:46,087 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,088 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training where getName() == text)
-2013-12-09 23:11:46,091 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,092 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Labor.(getLastName(), getFirstName())
-2013-12-09 23:11:46,094 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,095 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Labor.(getLastName(), getFirstName())
-2013-12-09 23:11:46,096 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,097 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Labor.(getLastName(), getFirstName())
-2013-12-09 23:11:46,101 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,102 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getLastName() == last and getFirstName() == first)
-2013-12-09 23:11:46,104 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,105 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getLastName() == last and getFirstName() == first)
-2013-12-09 23:11:46,107 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,108 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getLastName() == last and getFirstName() == first)
-2013-12-09 23:11:46,111 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,112 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car.(getNr(), getType(), getManufacturer())
-2013-12-09 23:11:46,114 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,115 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car.(getNr(), getType(), getManufacturer())
-2013-12-09 23:11:46,116 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,116 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car.(getNr(), getType(), getManufacturer())
-2013-12-09 23:11:46,119 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,120 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Car where getNr() == number)
-2013-12-09 23:11:46,122 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,123 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Car where getNr() == number)
-2013-12-09 23:11:46,124 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,125 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Car where getNr() == number)
-2013-12-09 23:11:46,127 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,128 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Title.getName()
-2013-12-09 23:11:46,129 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,130 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Title.getName()
-2013-12-09 23:11:46,131 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,131 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Title.getName()
-2013-12-09 23:11:46,134 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,135 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.TrainingProduct.getFullName()
-2013-12-09 23:11:46,137 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,137 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.TrainingProduct.getFullName()
-2013-12-09 23:11:46,139 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,139 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.TrainingProduct.getFullName()
-2013-12-09 23:11:46,148 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,149 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
-2013-12-09 23:11:46,151 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,152 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
-2013-12-09 23:11:46,153 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,153 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
-2013-12-09 23:11:46,157 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,157 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car
-2013-12-09 23:11:46,158 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,159 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car
-2013-12-09 23:11:46,160 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,160 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car
-2013-12-09 23:11:46,166 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
-2013-12-09 23:11:46,167 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getSalary() > sal)
-2013-12-09 23:11:46,171 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
-2013-12-09 23:11:46,172 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getSalary() > sal)
-2013-12-09 23:11:46,175 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
-2013-12-09 23:11:46,176 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getSalary() > sal)
-2013-12-09 23:11:46,202 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Sucessfully preprocessed task
-2013-12-09 23:11:46,541 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Creating java file: C:\Users\Gulbas\git\korba\dist\edu\pjwstk\jps\DBReport.java
-2013-12-09 23:11:48,608 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Creating java file: C:\Users\Gulbas\git\korba\dist\edu\pjwstk\jps\GUIQueries.java
-2013-12-09 23:11:49,026 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Creating java file: C:\Users\Gulbas\git\korba\dist\edu\pjwstk\jps\JPSQueries1.java
-2013-12-09 23:11:49,107 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Sucessfully writed 3 files
+2013-12-10 22:15:01,984 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,000 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where ! exists (TrainingAssignment where getLabor().getWorksAt() == c and getTraining().getName() == tName))
+2013-12-10 22:15:02,025 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,026 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where ! exists (TrainingAssignment where getLabor().getWorksAt() == c and getTraining().getName() == tName))
+2013-12-10 22:15:02,045 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,047 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where ! exists (TrainingAssignment where getLabor().getWorksAt() == c and getTraining().getName() == tName))
+2013-12-10 22:15:02,108 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,109 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp.getName(), ((Car where getOwner() == comp) as c).( count((RentCar where getCar() == c and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime()))))
+2013-12-10 22:15:02,143 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,144 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp.getName(), ((Car where getOwner() == comp) as c).( count((RentCar where getCar() == c and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime()))))
+2013-12-10 22:15:02,232 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,234 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(Company as comp).(comp.getName(), ((Car where getOwner() == comp) as c).( count((RentCar where getCar() == c and getDate().getTime() > _aux0 and getDate().getTime() < _aux1))))
+2013-12-10 22:15:02,282 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,283 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Car where getOwner().getName() == companyName) as c).(c,  count((RentCar where getCar() == c and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())) * 100/ daysInMonth)
+2013-12-10 22:15:02,311 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,312 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Car where getOwner().getName() == companyName) as c).(c,  count((RentCar where getCar() == c and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())) * 100/ daysInMonth)
+2013-12-10 22:15:02,395 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,396 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.((Car where getOwner().getName() == companyName) as c).(c,  count((RentCar where getCar() == c and getDate().getTime() > _aux0 and getDate().getTime() < _aux1)) * 100/ daysInMonth)
+2013-12-10 22:15:02,411 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,412 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getDirector().getWorkSince().getTime() < date.getTime())
+2013-12-10 22:15:02,424 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,425 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getDirector().getWorkSince().getTime() < date.getTime())
+2013-12-10 22:15:02,445 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,446 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (date.getTime() group as _aux0).db.(Company where getDirector().getWorkSince().getTime() < _aux0)
+2013-12-10 22:15:02,464 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,466 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c).((today.getTime() - getWorkSince().getTime())/ milisInYear)))
+2013-12-10 22:15:02,481 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,483 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c).((today.getTime() - getWorkSince().getTime())/ milisInYear)))
+2013-12-10 22:15:02,511 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,512 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (today.getTime() group as _aux0).db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c).((_aux0 - getWorkSince().getTime())/ milisInYear)))
+2013-12-10 22:15:02,521 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,522 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  count((Labor where getWorksAt() == c)))
+2013-12-10 22:15:02,528 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,529 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  count((Labor where getWorksAt() == c)))
+2013-12-10 22:15:02,533 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,535 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  count((Labor where getWorksAt() == c)))
+2013-12-10 22:15:02,552 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,553 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getHasTitleSince().getTime() < date.getTime())
+2013-12-10 22:15:02,568 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,569 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getHasTitleSince().getTime() < date.getTime())
+2013-12-10 22:15:02,595 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,596 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (date.getTime() group as _aux0).db.(Labor where getHasTitleSince().getTime() < _aux0)
+2013-12-10 22:15:02,604 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,605 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor as l where l.getWorksAt().getDirector() == l)
+2013-12-10 22:15:02,611 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,611 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor as l where l.getWorksAt().getDirector() == l)
+2013-12-10 22:15:02,615 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,616 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor as l where l.getWorksAt().getDirector() == l)
+2013-12-10 22:15:02,628 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,630 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor as l where l.getWorksAt() == c).( count((TrainingAssignment where getLabor() == l)))))
+2013-12-10 22:15:02,638 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,640 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor as l where l.getWorksAt() == c).( count((TrainingAssignment where getLabor() == l)))))
+2013-12-10 22:15:02,655 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,656 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor as l group as _aux0).(Company as c).(c.getName(),  avg((_aux0 where l.getWorksAt() == c).( count((TrainingAssignment where getLabor() == l)))))
+2013-12-10 22:15:02,675 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,676 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as com).(com, Car as c where c.getOwner() == com and c.getProdDate().getTime() < date.getTime())
+2013-12-10 22:15:02,693 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,695 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as com).(com, Car as c where c.getOwner() == com and c.getProdDate().getTime() < date.getTime())
+2013-12-10 22:15:02,741 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,742 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (date.getTime() group as _aux0).db.(Car as c group as _aux1).(Company as com).(com, _aux1 where c.getOwner() == com and c.getProdDate().getTime() < _aux0)
+2013-12-10 22:15:02,777 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,778 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where  exists (Labor where getWorksAt() == c and getSex() == 'M' and today.getTime() - getBirthDate().getTime() < milisInYear * age)).(c,  count((Labor where getWorksAt() == c and getSex() == 'M' and today.getTime() - getBirthDate().getTime() < milisInYear * age)))
+2013-12-10 22:15:02,801 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:02,802 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c where  exists (Labor where getWorksAt() == c and getSex() == 'M' and today.getTime() - getBirthDate().getTime() < milisInYear * age)).(c,  count((Labor where getWorksAt() == c and getSex() == 'M' and today.getTime() - getBirthDate().getTime() < milisInYear * age)))
+2013-12-10 22:15:02,974 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:02,975 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (today.getTime() group as _aux0).((milisInYear * age) group as _aux1).(today.getTime() group as _aux2).((milisInYear * age) group as _aux3).db.(Company as c where  exists (Labor where getWorksAt() == c and getSex() == 'M' and _aux0 - getBirthDate().getTime() < _aux1)).(c,  count((Labor where getWorksAt() == c and getSex() == 'M' and _aux2 - getBirthDate().getTime() < _aux3)))
+2013-12-10 22:15:02,994 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:02,995 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Labor where getWorksAt().getName() == companyName) as l).(l,  count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,005 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,006 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Labor where getWorksAt().getName() == companyName) as l).(l,  count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,037 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,038 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.((Labor where getWorksAt().getName() == companyName) as l).(l,  count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))
+2013-12-10 22:15:03,059 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,060 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingProduct as tp).(tp,  count((TrainingAssignment where getTraining().getTrainingProduct() == tp and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,071 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,072 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingProduct as tp).(tp,  count((TrainingAssignment where getTraining().getTrainingProduct() == tp and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,098 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,099 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(TrainingProduct as tp).(tp,  count((TrainingAssignment where getTraining().getTrainingProduct() == tp and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))
+2013-12-10 22:15:03,113 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,114 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training as t).(t,  count((TrainingAssignment where getTraining() == t and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,126 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,127 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training as t).(t,  count((TrainingAssignment where getTraining() == t and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,152 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,153 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(Training as t).(t,  count((TrainingAssignment where getTraining() == t and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))
+2013-12-10 22:15:03,167 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,168 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc).(tc,  count((TrainingAssignment where getTraining().getTrainingCompany() == tc and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,176 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,177 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc).(tc,  count((TrainingAssignment where getTraining().getTrainingCompany() == tc and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,212 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,213 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(TrainingCompany as tc).(tc,  count((TrainingAssignment where getTraining().getTrainingCompany() == tc and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))
+2013-12-10 22:15:03,225 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,226 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c and getTitle().getName() == titleName).((today.getTime() - getBirthDate().getTime())/ milisInYear)))
+2013-12-10 22:15:03,237 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,238 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c and getTitle().getName() == titleName).((today.getTime() - getBirthDate().getTime())/ milisInYear)))
+2013-12-10 22:15:03,256 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,257 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (today.getTime() group as _aux0).db.(Company as c).(c.getName(),  avg((Labor where getWorksAt() == c and getTitle().getName() == titleName).((_aux0 - getBirthDate().getTime())/ milisInYear)))
+2013-12-10 22:15:03,261 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,262 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor() == ll)
+2013-12-10 22:15:03,264 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,265 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor() == ll)
+2013-12-10 22:15:03,266 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,267 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor() == ll)
+2013-12-10 22:15:03,270 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,271 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingAssignment where getLabor() == ll)
+2013-12-10 22:15:03,273 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,274 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingAssignment where getLabor() == ll)
+2013-12-10 22:15:03,276 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,276 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingAssignment where getLabor() == ll)
+2013-12-10 22:15:03,280 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,281 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getCar().getNr() == carNrInt)
+2013-12-10 22:15:03,283 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,284 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getCar().getNr() == carNrInt)
+2013-12-10 22:15:03,286 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,287 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getCar().getNr() == carNrInt)
+2013-12-10 22:15:03,298 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,299 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.( unique (RentCar where getCar().getNr() == carNrInt and getDate() > beginDate and getDate().getTime() < endDate.getTime()).getLabor())
+2013-12-10 22:15:03,306 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,307 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.( unique (RentCar where getCar().getNr() == carNrInt and getDate() > beginDate and getDate().getTime() < endDate.getTime()).getLabor())
+2013-12-10 22:15:03,324 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,325 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (endDate.getTime() group as _aux0).db.( unique (RentCar where getCar().getNr() == carNrInt and getDate() > beginDate and getDate().getTime() < _aux0).getLabor())
+2013-12-10 22:15:03,347 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,348 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor().getWorksAt().getName() == companyName and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())
+2013-12-10 22:15:03,362 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,363 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(RentCar where getLabor().getWorksAt().getName() == companyName and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())
+2013-12-10 22:15:03,397 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,398 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(RentCar where getLabor().getWorksAt().getName() == companyName and getDate().getTime() > _aux0 and getDate().getTime() < _aux1)
+2013-12-10 22:15:03,417 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,419 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Labor where getWorksAt().getName() == companyName) as l).(l, (TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime()))
+2013-12-10 22:15:03,434 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,435 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.((Labor where getWorksAt().getName() == companyName) as l).(l, (TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime()))
+2013-12-10 22:15:03,480 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,481 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.((Labor where getWorksAt().getName() == companyName) as l).(l, (TrainingAssignment where getLabor() == l and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1))
+2013-12-10 22:15:03,503 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,504 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.( unique (Car.getManufacturer() as m)).(m,  count((RentCar where getCar().getManufacturer() == m and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,513 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,514 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.( unique (Car.getManufacturer() as m)).(m,  count((RentCar where getCar().getManufacturer() == m and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())))
+2013-12-10 22:15:03,543 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,544 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.( unique (Car.getManufacturer() as m)).(m,  count((RentCar where getCar().getManufacturer() == m and getDate().getTime() > _aux0 and getDate().getTime() < _aux1)))
+2013-12-10 22:15:03,550 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,551 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc where  exists (Training where getTrainingProduct().getFullName() == productName and getTrainingCompany() == tc))
+2013-12-10 22:15:03,553 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,553 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc where  exists (Training where getTrainingProduct().getFullName() == productName and getTrainingCompany() == tc))
+2013-12-10 22:15:03,555 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,556 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(TrainingCompany as tc where  exists (Training where getTrainingProduct().getFullName() == productName and getTrainingCompany() == tc))
+2013-12-10 22:15:03,568 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,569 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp) as l).( count((RentCar where getLabor() == l and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())))))
+2013-12-10 22:15:03,577 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,579 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp) as l).( count((RentCar where getLabor() == l and getDate().getTime() > beginDate.getTime() and getDate().getTime() < endDate.getTime())))))
+2013-12-10 22:15:03,597 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,598 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp) as l).( count((RentCar where getLabor() == l and getDate().getTime() > _aux0 and getDate().getTime() < _aux1)))))
+2013-12-10 22:15:03,618 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,619 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp and getSex() == 'M') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))),  avg(((Labor where getWorksAt() == comp and getSex() == 'F') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))))
+2013-12-10 22:15:03,635 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,636 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp and getSex() == 'M') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))),  avg(((Labor where getWorksAt() == comp and getSex() == 'F') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > beginDate.getTime() and getStartDate().getTime() < endDate.getTime())))))
+2013-12-10 22:15:03,708 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,709 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] (beginDate.getTime() group as _aux0).(endDate.getTime() group as _aux1).(beginDate.getTime() group as _aux2).(endDate.getTime() group as _aux3).db.(Company as comp).(comp,  avg(((Labor where getWorksAt() == comp and getSex() == 'M') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > _aux0 and getStartDate().getTime() < _aux1)))),  avg(((Labor where getWorksAt() == comp and getSex() == 'F') as l).( count((TrainingAssignment where getLabor() == l and getStartDate().getTime() > _aux2 and getStartDate().getTime() < _aux3)))))
+2013-12-10 22:15:03,714 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,715 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getName() == compName)
+2013-12-10 22:15:03,716 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,717 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getName() == compName)
+2013-12-10 22:15:03,719 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,720 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getName() == compName)
+2013-12-10 22:15:03,732 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,733 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.CompanyBranch.getName()
+2013-12-10 22:15:03,735 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,736 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.CompanyBranch.getName()
+2013-12-10 22:15:03,737 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,737 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.CompanyBranch.getName()
+2013-12-10 22:15:03,740 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,741 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(CompanyBranch where getName() == branch)
+2013-12-10 22:15:03,743 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,744 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(CompanyBranch where getName() == branch)
+2013-12-10 22:15:03,746 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,747 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(CompanyBranch where getName() == branch)
+2013-12-10 22:15:03,751 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,752 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getType().getName() == branch).getName()
+2013-12-10 22:15:03,754 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,755 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getType().getName() == branch).getName()
+2013-12-10 22:15:03,757 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,757 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getType().getName() == branch).getName()
+2013-12-10 22:15:03,760 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,761 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Company.getName()
+2013-12-10 22:15:03,763 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,764 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Company.getName()
+2013-12-10 22:15:03,766 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,767 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Company.getName()
+2013-12-10 22:15:03,771 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,773 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getName() == comp)
+2013-12-10 22:15:03,775 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,776 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getName() == comp)
+2013-12-10 22:15:03,778 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,779 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where getName() == comp)
+2013-12-10 22:15:03,785 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,787 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where  exists getPartOf() and getPartOf().getName() == owner).getName()
+2013-12-10 22:15:03,791 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,792 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where  exists getPartOf() and getPartOf().getName() == owner).getName()
+2013-12-10 22:15:03,795 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,796 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Company where  exists getPartOf() and getPartOf().getName() == owner).getName()
+2013-12-10 22:15:03,800 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,801 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Training.getName()
+2013-12-10 22:15:03,804 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,805 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Training.getName()
+2013-12-10 22:15:03,806 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,807 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Training.getName()
+2013-12-10 22:15:03,811 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,812 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training where getName() == text)
+2013-12-10 22:15:03,814 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,815 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training where getName() == text)
+2013-12-10 22:15:03,817 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,818 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Training where getName() == text)
+2013-12-10 22:15:03,821 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,822 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Labor.(getLastName(), getFirstName())
+2013-12-10 22:15:03,824 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,825 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Labor.(getLastName(), getFirstName())
+2013-12-10 22:15:03,826 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,827 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Labor.(getLastName(), getFirstName())
+2013-12-10 22:15:03,831 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,832 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getLastName() == last and getFirstName() == first)
+2013-12-10 22:15:03,835 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,836 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getLastName() == last and getFirstName() == first)
+2013-12-10 22:15:03,837 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,838 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getLastName() == last and getFirstName() == first)
+2013-12-10 22:15:03,842 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,843 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car.(getNr(), getType(), getManufacturer())
+2013-12-10 22:15:03,845 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,846 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car.(getNr(), getType(), getManufacturer())
+2013-12-10 22:15:03,847 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,848 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car.(getNr(), getType(), getManufacturer())
+2013-12-10 22:15:03,853 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,854 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Car where getNr() == number)
+2013-12-10 22:15:03,856 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,857 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Car where getNr() == number)
+2013-12-10 22:15:03,860 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,861 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Car where getNr() == number)
+2013-12-10 22:15:03,864 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,865 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Title.getName()
+2013-12-10 22:15:03,867 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,868 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Title.getName()
+2013-12-10 22:15:03,869 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,870 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Title.getName()
+2013-12-10 22:15:03,873 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,873 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.TrainingProduct.getFullName()
+2013-12-10 22:15:03,875 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,876 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.TrainingProduct.getFullName()
+2013-12-10 22:15:03,877 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,878 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.TrainingProduct.getFullName()
+2013-12-10 22:15:03,886 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,887 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
+2013-12-10 22:15:03,890 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,891 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
+2013-12-10 22:15:03,893 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,894 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] 1 + 2 * 3 + 4
+2013-12-10 22:15:03,902 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,903 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car
+2013-12-10 22:15:03,905 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,905 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car
+2013-12-10 22:15:03,906 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,907 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.Car
+2013-12-10 22:15:03,913 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query before optimization: 
+2013-12-10 22:15:03,914 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getSalary() > sal)
+2013-12-10 22:15:03,918 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after dead subqueries optimization: 
+2013-12-10 22:15:03,919 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getSalary() > sal)
+2013-12-10 22:15:03,922 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] Query after independent subqueries optimization: 
+2013-12-10 22:15:03,923 INFO  [pl.wcislo.sbql4j.java.utils.SBQL4JStatement] db.(Labor where getSalary() > sal)
+2013-12-10 22:15:03,950 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Sucessfully preprocessed task
+2013-12-10 22:15:04,244 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Creating java file: C:\Users\Gulbas\git\korba\dist\edu\pjwstk\jps\DBReport.java
+2013-12-10 22:15:06,297 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Creating java file: C:\Users\Gulbas\git\korba\dist\edu\pjwstk\jps\GUIQueries.java
+2013-12-10 22:15:06,741 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Creating java file: C:\Users\Gulbas\git\korba\dist\edu\pjwstk\jps\JPSQueries1.java
+2013-12-10 22:15:06,799 INFO  [pl.wcislo.sbql4j.java.preprocessor.PreprocessorRun] Sucessfully writed 3 files

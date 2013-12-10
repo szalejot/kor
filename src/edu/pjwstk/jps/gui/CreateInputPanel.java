@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import org.jdesktop.swingx.JXDatePicker;
@@ -451,31 +452,40 @@ public class CreateInputPanel extends JPanel implements ActionListener, ItemList
         }
         
     }
-    public void createInputCar(){
-//        private Integer nr; textfield
-//        private String manufacturer; combobox z enuma
-//        private String type; comboboz z enuma
-//        private String color; combobox z enuma
-//        private Date prodDate; jxdatepicker
-//        private Company owner; combo box
-    }
-    public void createInputTraining(){
-//        String name; textfield
-//        TrainingCompany trainingCompany; cb
-//        TrainingProduct trainingProduct; cb
-//        Integer lenghtInDays; textfield
-    }
-    public void createInputLabor(){
-//        private String firstName; text
-//        private String lastName; text
-//        private Date birthDate; jxdate
-//        private Character sex; // M or F radiobutton
-//        private Double salary; text
-//        private Date workSince; jxdate
-//        private Title title; cb
-//        private Date hasTitleSince; jxdate
-//        private Company worksAt; cb
-    }
+//    public void createInputCar(){
+//        private JTextField carNr;
+//        private JComboBox<String> carManufacture, carType, carColor, carComp;
+//        private JXDatePicker carPickDate;
+////        private Integer nr; textfield
+////        private String manufacturer; combobox z enuma
+////        private String type; comboboz z enuma
+////        private String color; combobox z enuma
+////        private Date prodDate; jxdatepicker
+////        private Company owner; combo box
+//    }
+//    public void createInputTraining(){
+//        private JTextField trainingName, trainingLenght;
+//        private JComboBox<?> trainComp, trainProd;
+////        String name; textfield
+////        TrainingCompany trainingCompany; cb
+////        TrainingProduct trainingProduct; cb
+////        Integer lenghtInDays; textfield
+//    }
+//    public void createInputLabor(){
+//        private JTextField laborFirsName, laborLastName, laborSalary;
+//        private JComboBox<?> laborTitle, laborCompany;
+//        private JRadioButton laborSex;
+//        private JXDatePicker laborBirth, laborWorksSince, laborTitleSince;
+////        private String firstName; text
+////        private String lastName; text
+////        private Date birthDate; jxdate
+////        private Character sex; // M or F radiobutton
+////        private Double salary; text
+////        private Date workSince; jxdate
+////        private Title title; cb
+////        private Date hasTitleSince; jxdate
+////        private Company worksAt; cb
+//    }
 }
 
  
