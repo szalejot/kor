@@ -24,8 +24,8 @@ public class GUIQueries {
 	   System.out.println("CompanyBranches = " + res);
 	   Collection<String> res1 = query.getCompany("branch");
 	   System.out.println("Company = " + res1);
-	   Collection<String> res2 = query.getInnerCompany("section nr 176");
-	   System.out.println("Owned by section nr 176 = " + res2);	   
+	   Collection<String> res2 = query.getInnerCompany("headquaters nr 0");
+	   System.out.println("Owned by headquaters nr 0 = " + res2);	   
 	   Collection<CompanyBranch> res3 = query.getCompanyBranchClass("headquaters");
        System.out.println("comp branch"+res3);
        query.close();
@@ -34,6 +34,7 @@ public class GUIQueries {
     
     public void init() {
         dbconn = new DBConnector();
+        dbconn.initializeDB();
         db = dbconn.getConnection();
     }
     
@@ -67,7 +68,7 @@ public class GUIQueries {
     
     
     public Collection<String> getInnerCompany(String owner){
-    	Collection<String> res = #{ db.((Company where partOf.name == owner).name) };
+    	Collection<String> res = #{ db.((Company where exists(partOf) and partOf.name == owner).name) };
     	return res;
     }
     

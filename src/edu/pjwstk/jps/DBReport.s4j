@@ -38,6 +38,7 @@ import com.db4o.*;
  * 24. Lista firm przeprowadzających szkolenia z danego produktu.
  * 25. Średnia liczba wypożyczeń na pracownika w miesiącu x względem Company.
  * 26. Średnia liczba szkoleń na pracownika w roku x z rozbiciem na Company i płeć pracownika.
+ * 27. Łańcuch hierarchii od zadanego Company.
  * 
  * @author Michal
  *
@@ -108,8 +109,10 @@ public class DBReport {
 //       System.out.println("Report 24 = " + res24);
 //       Collection<Struct> res25 = dbReport.report25(cal.getTime());
 //       System.out.println("Report 25 = " + res25);
-       Collection<Struct> res26 = dbReport.report26(cal.getTime());
-       System.out.println("Report 26 = " + res26);
+//       Collection<Struct> res26 = dbReport.report26(cal.getTime());
+//       System.out.println("Report 26 = " + res26);
+       Collection<Company> res27 = dbReport.report27((String)(queries.getCompanyName().toArray()[10]));
+       System.out.println("Report 27 = " + res27);
        dbReport.close();
     }
     
@@ -485,6 +488,16 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (Company as comp).(comp, avg( ((Labor where worksAt == comp and sex == 'M') as l).(count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ), avg( ((Labor where worksAt == comp and sex == 'F') as l).(count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ) )) };
+        return res;
+    }
+    
+    /**
+     * 27. Łańcuch hierarchii od zadanego Company.
+     */
+    public Collection<Company> report27(String compName) {
+        ObjectContainer db = dbconn.getConnection();
+        //Collection<Company> res = #{ db.( (Company where name == compName) close by (partOf) ) };
+        Collection<Company> res = #{ db.( (Company where name == compName) ) };
         return res;
     }
 
