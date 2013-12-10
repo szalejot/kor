@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
@@ -321,6 +322,7 @@ public class MenuMain implements ActionListener {
                 if ((metody[x].getName().equals("report" + reportNr))) {
                     obj = getUserInput(reportNr);
                     report.init();
+                    if(obj!=null){
                     try {
                         Collection<?> resultSet = (Collection<?>) metody[x].invoke(report, obj);
                         newPanel.AddTableToPanel(resultSet);
@@ -335,6 +337,8 @@ public class MenuMain implements ActionListener {
                         e.printStackTrace();
                     } catch (NullPointerException e){
                         newPanel.AddTableToPanel("Nie znaleziono rekordów speniajcych zapytanie");
+                    }}else{
+                     newPanel.getCount().setText("");
                     }
                 }
             }
@@ -343,6 +347,7 @@ public class MenuMain implements ActionListener {
                     if ((metody[x].getName().equals("report" + reportNr))) {
                         objArr = new Object[2];
                         objArr = getUserInput(reportNr, true);
+                        if(objArr!=null){
                         Object obj1, obj2;
                         
                         obj1=objArr[0];
@@ -362,7 +367,10 @@ public class MenuMain implements ActionListener {
                             e.printStackTrace();
                         } catch (NullPointerException e){
                             newPanel.AddTableToPanel("Nie znaleziono rekordów speniajcych zapytanie");
-                        }}}   
+                        }}}else{
+                            newPanel.getCount().setText("");
+                        }   
+                        }
             }else if(!firstParameter&&secondParameter){
                 newPanel.AddTableToPanel("Jak moze istniec drugi parametr bez pierwszego, programisto popraw kod");
         } else {

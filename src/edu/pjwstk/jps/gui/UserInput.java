@@ -1,5 +1,6 @@
 package edu.pjwstk.jps.gui;
 
+import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,12 +46,15 @@ public class UserInput extends JPanel {
         choosed = (Integer)JOptionPane.showInputDialog(frame, "Pick a Year:"
                 , "Choose", JOptionPane.QUESTION_MESSAGE
                 , null, years, years[0] );
+        if(choosed==JOptionPane.CANCEL_OPTION||choosed==JOptionPane.CLOSED_OPTION){
+            return null;
+        }else{
         Calendar cal = Calendar.getInstance();
         cal.set(choosed,0, 1);
         
         Date data; 
         data = new Date(cal.getTimeInMillis());
-        return data;
+        return data;}
     }
     public Date CreateDataDay(){
         JXDatePicker pickDate;
@@ -61,9 +65,13 @@ public class UserInput extends JPanel {
                 new JLabel("Choose a day:"),
                 pickDate,
         };
-        JOptionPane.showMessageDialog(frame, input,"Choose paramters for report.", JOptionPane.PLAIN_MESSAGE);
+        Object[] options = {"Ok","Cancel"};
+        Integer choice = JOptionPane.showOptionDialog(frame, input,"Choose paramters for report.",JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[1]);
+        if(choice == JOptionPane.NO_OPTION||choice == JOptionPane.CLOSED_OPTION){
+            return null;
+        }else{
         
-        return pickDate.getDate();       
+        return pickDate.getDate(); }      
     }
     public String CreateCompanyDialog(){
         ArrayList<String> companyName;
@@ -72,7 +80,10 @@ public class UserInput extends JPanel {
         choosed = (String)JOptionPane.showInputDialog(frame, "Pick a Training:"
                 , "Trainings", JOptionPane.QUESTION_MESSAGE
                 , null, companyName.toArray(), companyName.toArray()[0] );
-        return choosed;
+        if(choosed==String.valueOf(JOptionPane.CANCEL_OPTION)||choosed==String.valueOf(JOptionPane.CLOSED_OPTION)){
+            return null;
+        }else{
+        return choosed;}
     }
     public Object[] CreateCompanyDateDialog(Integer option){
         JComboBox<Integer> yearsCB, monthsCB;
@@ -99,7 +110,11 @@ public class UserInput extends JPanel {
         }else{
             
         }
-        JOptionPane.showMessageDialog(frame, input,"Choose paramters for report.", JOptionPane.PLAIN_MESSAGE);
+        Object[] options = {"Ok","Cancel"};
+        Integer choice = JOptionPane.showOptionDialog(frame, input,"Choose paramters for report.",JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[1]);
+        if(choice == JOptionPane.NO_OPTION||choice == JOptionPane.CLOSED_OPTION){
+            return null;
+        }else{
         Calendar cal = Calendar.getInstance();
         cal.set((int)yearsCB.getSelectedItem(),(int)monthsCB.getSelectedItem(), 1);
         
@@ -109,7 +124,7 @@ public class UserInput extends JPanel {
         Object[] obj = new Object[2];
         obj[0]=companyCB.getSelectedItem();
         obj[1]=data;
-        return obj;
+        return obj;}
     }
     public String CreateCarDialog(){
         String[] carsNames;
@@ -121,12 +136,16 @@ public class UserInput extends JPanel {
             carsNames[i] = (String) String.valueOf(tmpStructCar.getValue(0)) +" "+ tmpStructCar.getValue(1) +" "+ tmpStructCar.getValue(2);               
         }
         Arrays.sort(carsNames);     
-        String strCarsCB = (String)JOptionPane.showInputDialog(frame, "Pick a car:"
+        String choosed = (String)JOptionPane.showInputDialog(frame, "Pick a car:"
                 , "Trainings", JOptionPane.QUESTION_MESSAGE
                 , null, carsNames, carsNames[0] );
-        String arrCarsCB[] = strCarsCB.split(" ");
-        String choosed = arrCarsCB[0];
-        return choosed;
+
+        if(choosed==String.valueOf(JOptionPane.CANCEL_OPTION)||choosed==String.valueOf(JOptionPane.CLOSED_OPTION)){
+            return null;
+        }else{
+        String arrCarsCB[] = choosed.split(" ");
+        String toReturn = arrCarsCB[0];
+        return toReturn;}
 }
     public Object[] CreateCarDateDialog(){
         JComboBox<Integer> yearsCB, monthsCB;
@@ -144,26 +163,32 @@ public class UserInput extends JPanel {
         }
         Arrays.sort(carsNames);     
         carCB = new JComboBox<String>(carsNames);
+        JLabel error = new JLabel();
+        error.setForeground(Color.RED);
         JComponent[] input = new JComponent[]{
                 new JLabel("Year:"),
                 yearsCB,
                 new JLabel("Month:"),
                 monthsCB,
+                error,
                 new JLabel("Choose Car"),
                 carCB
         };
-        JOptionPane.showMessageDialog(frame, input,"Choose paramters for report.", JOptionPane.PLAIN_MESSAGE);
+        Object[] options = {"Ok","Cancel"};
+        Integer choice = JOptionPane.showOptionDialog(frame, input,"Choose paramters for report.",JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[1]);
+        if(choice == JOptionPane.NO_OPTION||choice == JOptionPane.CLOSED_OPTION){
+            return null;
+        }else{
         Calendar cal = Calendar.getInstance();
         cal.set((int)yearsCB.getSelectedItem(),(int)monthsCB.getSelectedItem(), 1);
         
         Date data; 
         data = new Date(cal.getTimeInMillis());
         String arrCarsCB[] =((String)carCB.getSelectedItem()).split(" ");
-        Integer choosed = Integer.valueOf(arrCarsCB[0]);
         Object[] obj = new Object[2];
-        obj[0]=choosed;
+        obj[0]=arrCarsCB[0];
         obj[1]=data;
-        return obj;
+        return obj;}
     
 }
     public String CreateTitleDialog(){
@@ -173,7 +198,10 @@ public class UserInput extends JPanel {
         choosed = (String)JOptionPane.showInputDialog(frame, "Pick a Title:"
                 , "Trainings", JOptionPane.QUESTION_MESSAGE
                 , null, titleName.toArray(), titleName.toArray()[0] );
-        return choosed;
+        if(choosed==String.valueOf(JOptionPane.CANCEL_OPTION)||choosed==String.valueOf(JOptionPane.CLOSED_OPTION)){
+            return null;
+        }else{
+        return choosed;}
 }
 public String CreateTrainingDialog(){
     ArrayList<String> trainingName;
@@ -182,7 +210,10 @@ public String CreateTrainingDialog(){
     choosed = (String)JOptionPane.showInputDialog(frame, "Pick a Training:"
             , "Trainings", JOptionPane.QUESTION_MESSAGE
             , null, trainingName.toArray(), trainingName.toArray()[0] );
-    return choosed;
+    if(choosed==String.valueOf(JOptionPane.CANCEL_OPTION)||choosed==String.valueOf(JOptionPane.CLOSED_OPTION)){
+        return null;
+    }else{
+    return choosed;}
     }
 public String CreateTrainingProductDialog(){
     ArrayList<String> trainingProductName;
@@ -191,7 +222,10 @@ public String CreateTrainingProductDialog(){
     choosed = (String)JOptionPane.showInputDialog(frame, "Pick a Training Product:"
             , "Trainings", JOptionPane.QUESTION_MESSAGE
             , null, trainingProductName.toArray(), trainingProductName.toArray()[0] );
-    return choosed;
+    if(choosed==String.valueOf(JOptionPane.CANCEL_OPTION)||choosed==String.valueOf(JOptionPane.CLOSED_OPTION)){
+        return null;
+    }else{
+    return choosed;}
 }
 public Labor CreateLaborDialog(){
     String[] laborsNames;
@@ -203,25 +237,31 @@ public Labor CreateLaborDialog(){
         laborsNames[i] = (String) tmpStruct.getValue(0) +" "+ tmpStruct.getValue(1);               
     }
     Arrays.sort(laborsNames);    
-    String strCarsCB = (String)JOptionPane.showInputDialog(frame, "Pick a Labor:"
+    String choosed = (String)JOptionPane.showInputDialog(frame, "Pick a Labor:"
             , "Labors", JOptionPane.QUESTION_MESSAGE
             , null, laborsNames, laborsNames[0] );;
-    String arrCarsCB[] = strCarsCB.split(" ");
+    if(choosed==String.valueOf(JOptionPane.CANCEL_OPTION)||choosed==String.valueOf(JOptionPane.CLOSED_OPTION)){
+        return null;
+    }else{
+    String arrCarsCB[] = choosed.split(" ");
     ArrayList<Labor> tmpLaborClass = new ArrayList<Labor>(queryGUI.getLaborClass(arrCarsCB[0], arrCarsCB[1]));
-    return tmpLaborClass.get(0);
+    return tmpLaborClass.get(0);}
 }
 public Integer CreateIntegerDialog(){
     Boolean number = false;
     Integer i = null;
     while (!number) {
-        String inputParameter = JOptionPane.showInputDialog(frame, "Input number of years:", 0);
-        try {
-            i = Integer.parseInt(inputParameter);
+        String choosed = JOptionPane.showInputDialog(frame, "Input number of years:", 0);
+        if(choosed==String.valueOf(JOptionPane.CANCEL_OPTION)||choosed==String.valueOf(JOptionPane.CLOSED_OPTION)){
+            return null;
+        }else{
+            try {
+            i = Integer.parseInt(choosed);
             number = true;
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(frame, "It is not a number you provided, pls try again");
             number = false;
-        }
+        }}                   
     }
     return i;
 }
