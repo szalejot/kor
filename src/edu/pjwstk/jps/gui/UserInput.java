@@ -41,7 +41,7 @@ public class UserInput extends JPanel {
             years[i]=cal.get(Calendar.YEAR)-i;
         }
     }
-    public Date CreateDataYear(){
+    public Date createDateYear(){
         Integer choosed;
         choosed = (Integer)JOptionPane.showInputDialog(frame, "Pick a Year:"
                 , "Choose", JOptionPane.QUESTION_MESSAGE
@@ -56,7 +56,28 @@ public class UserInput extends JPanel {
         data = new Date(cal.getTimeInMillis());
         return data;}
     }
-    public Date CreateDataDay(){
+    public Date createDateMonth(){
+        JComboBox<Integer> yearsCB, monthsCB;
+        yearsCB = new JComboBox<>(years);
+        monthsCB= new JComboBox<>(months);
+        JComponent[] input = new JComponent[]{
+                new JLabel("Year:"),
+                yearsCB,
+                new JLabel("Month:"),
+                monthsCB,
+        };
+        Object[] options = {"Ok","Cancel"};
+        Integer choice = JOptionPane.showOptionDialog(frame, input,"Choose paramters for report.",JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE,null,options,options[1]);
+        if(choice == JOptionPane.NO_OPTION||choice == JOptionPane.CLOSED_OPTION){
+            return null;
+        }else{
+        Calendar cal = Calendar.getInstance();
+        cal.set((int)yearsCB.getSelectedItem(),(int)monthsCB.getSelectedItem(), 1);    
+        Date data; 
+        data = new Date(cal.getTimeInMillis());       
+        return data;   
+    }}
+    public Date createDateDay(){
         JXDatePicker pickDate;
         pickDate = new JXDatePicker();
         pickDate.setDate(Calendar.getInstance().getTime());
@@ -73,19 +94,19 @@ public class UserInput extends JPanel {
         
         return pickDate.getDate(); }      
     }
-    public String CreateCompanyDialog(){
+    public String createCompanyDialog(){
         ArrayList<String> companyName;
         companyName = new ArrayList<String>(queryGUI.getCompanyName());
         String choosed;
-        choosed = (String)JOptionPane.showInputDialog(frame, "Pick a Training:"
-                , "Trainings", JOptionPane.QUESTION_MESSAGE
+        choosed = (String)JOptionPane.showInputDialog(frame, "Pick a Company:"
+                , "Company", JOptionPane.QUESTION_MESSAGE
                 , null, companyName.toArray(), companyName.toArray()[0] );
         if(choosed==String.valueOf(JOptionPane.CANCEL_OPTION)||choosed==String.valueOf(JOptionPane.CLOSED_OPTION)){
             return null;
         }else{
         return choosed;}
     }
-    public Object[] CreateCompanyDateDialog(Integer option){
+    public Object[] createCompanyDateDialog(Integer option){
         JComboBox<Integer> yearsCB, monthsCB;
         JComboBox<String> companyCB;
         yearsCB = new JComboBox<>(years);
@@ -126,7 +147,7 @@ public class UserInput extends JPanel {
         obj[1]=data;
         return obj;}
     }
-    public String CreateCarDialog(){
+    public String createCarDialog(){
         String[] carsNames;
         ArrayList<?> tmpCarsNames = new ArrayList<>(queryGUI.getCarName());
         Struct tmpStructCar = (Struct) tmpCarsNames.get(0);
@@ -147,7 +168,7 @@ public class UserInput extends JPanel {
         String toReturn = arrCarsCB[0];
         return toReturn;}
 }
-    public Object[] CreateCarDateDialog(){
+    public Object[] createCarDateDialog(){
         JComboBox<Integer> yearsCB, monthsCB;
         JComboBox<String> carCB;
         yearsCB = new JComboBox<>(years);
@@ -191,7 +212,7 @@ public class UserInput extends JPanel {
         return obj;}
     
 }
-    public String CreateTitleDialog(){
+    public String createTitleDialog(){
         ArrayList<String> titleName;
         titleName = new ArrayList<String>(queryGUI.getTitleName());
         String choosed;
@@ -203,7 +224,7 @@ public class UserInput extends JPanel {
         }else{
         return choosed;}
 }
-public String CreateTrainingDialog(){
+public String createTrainingDialog(){
     ArrayList<String> trainingName;
     trainingName = new ArrayList<String>(queryGUI.getTrainingName());
     String choosed;
@@ -215,7 +236,7 @@ public String CreateTrainingDialog(){
     }else{
     return choosed;}
     }
-public String CreateTrainingProductDialog(){
+public String createTrainingProductDialog(){
     ArrayList<String> trainingProductName;
     trainingProductName = new ArrayList<String>(queryGUI.getTrainingProductName());
     String choosed;
@@ -227,7 +248,7 @@ public String CreateTrainingProductDialog(){
     }else{
     return choosed;}
 }
-public Labor CreateLaborDialog(){
+public Labor createLaborDialog(){
     String[] laborsNames;
     ArrayList<?> tmpLaborsNames = new ArrayList<>(queryGUI.getLaborName());      
     Struct tmpStruct = (Struct) tmpLaborsNames.get(0);
@@ -247,7 +268,7 @@ public Labor CreateLaborDialog(){
     ArrayList<Labor> tmpLaborClass = new ArrayList<Labor>(queryGUI.getLaborClass(arrCarsCB[0], arrCarsCB[1]));
     return tmpLaborClass.get(0);}
 }
-public Integer CreateIntegerDialog(){
+public Integer createIntegerDialog(){
     Boolean number = false;
     Integer i = null;
     while (!number) {
