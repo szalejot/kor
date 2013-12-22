@@ -131,6 +131,9 @@ public class DBReport {
     public Collection<Company> report1(String tName) {
         ObjectContainer db = dbconn.getConnection();
         Collection<Company> res = #{ db.( Company as c where not exists (TrainingAssignment where labor.worksAt == c and training.name == tName)) };
+        for (Company c : res) {
+            db.activate(c, 6);
+        }
         return res;
     }
     
@@ -151,6 +154,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (Company as comp).(comp.name, ((Car where owner == comp) as c).(count(RentCar where car == c and date.time > beginDate.time and date.time < endDate.time))) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -171,6 +179,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( ((Car where owner.name == companyName) as c).(c, count(RentCar where car == c and date.time > beginDate.time and date.time < endDate.time )*100/daysInMonth) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -183,6 +196,9 @@ public class DBReport {
         Date today = new Date();
         Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
         Collection<Company> res = #{ db.( Company where director.workSince.time < date.time ) };
+        for (Company c : res) {
+            db.activate(c, 6);
+        }
         return res;
     }
     
@@ -194,6 +210,11 @@ public class DBReport {
         long milisInYear = 365l * 24l * 3600l * 1000l;
         Date today = new Date();
         Collection<Struct> res = #{ db.( (Company as c).(c.name, avg( (Labor where worksAt == c).((today.time - workSince.time)/milisInYear))  )) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -203,6 +224,11 @@ public class DBReport {
     public Collection<Struct> report6() {
         ObjectContainer db = dbconn.getConnection();
         Collection<Struct> res = #{ db.( (Company as c).(c.name, count(Labor where worksAt == c)) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -215,6 +241,9 @@ public class DBReport {
         Date today = new Date();
         Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
         Collection<Labor> res = #{ db.( Labor where hasTitleSince.time < date.time ) };
+        for (Labor l : res) {
+            db.activate(l, 6);
+        }
         return res;
     }
     
@@ -224,6 +253,9 @@ public class DBReport {
     public Collection<Labor> report8() {
         ObjectContainer db = dbconn.getConnection();
         Collection<Labor> res = #{ db.( (Labor as l) where l.worksAt.director == l ) };
+        for (Labor l : res) {
+            db.activate(l, 6);
+        }
         return res;
     }
     
@@ -233,6 +265,11 @@ public class DBReport {
     public Collection<Struct> report9() {
         ObjectContainer db = dbconn.getConnection();
         Collection<Struct> res = #{ db.( (Company as c).(c.name, avg( ((Labor as l) where l.worksAt == c).(count(TrainingAssignment where labor == l))) ) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -245,6 +282,11 @@ public class DBReport {
         Date today = new Date();
         Date date = new Date(today.getTime() - milisInDay * 356 * lenghtInYears);
         Collection<Struct> res = #{ db.( (Company as com).(com, (Car as c) where (c.owner == com and c.prodDate.time < date.time)) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -256,6 +298,11 @@ public class DBReport {
         long milisInYear = 365l * 24l * 3600l * 1000l;
         Date today = new Date();
         Collection<Struct> res = #{ db.( (Company as c where exists (Labor where worksAt == c and sex == 'M' and today.time - birthDate.time < milisInYear*age)).(c, count(Labor where worksAt == c and sex == 'M' and today.time - birthDate.time < milisInYear*age) ) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -274,6 +321,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( ((Labor where worksAt.name == companyName) as l).(l, count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -292,6 +344,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (TrainingProduct as tp).(tp, count(TrainingAssignment where training.trainingProduct == tp and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -310,6 +367,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (Training as t).(t, count(TrainingAssignment where training == t and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -328,6 +390,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (TrainingCompany as tc).(tc, count(TrainingAssignment where training.trainingCompany == tc and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -339,6 +406,11 @@ public class DBReport {
         long milisInYear = 365l * 24l * 3600l * 1000l;
         Date today = new Date();
         Collection<Struct> res = #{ db.( (Company as c).(c.name, avg( (Labor where worksAt == c and title.name == titleName).((today.time - birthDate.time)/milisInYear))  )) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -348,6 +420,9 @@ public class DBReport {
     public Collection<RentCar> report17(Labor ll) {
         ObjectContainer db = dbconn.getConnection();
         Collection<RentCar> res = #{ db.( RentCar where labor == ll ) };
+        for (RentCar rc : res) {
+            db.activate(rc, 6);
+        }
         return res;
     }
     
@@ -357,6 +432,9 @@ public class DBReport {
     public Collection<TrainingAssignment> report18(Labor ll) {
         ObjectContainer db = dbconn.getConnection();
         Collection<TrainingAssignment> res = #{ db.( TrainingAssignment where labor == ll ) };
+        for (TrainingAssignment ta : res) {
+            db.activate(ta, 6);
+        }
         return res;
     }
     
@@ -367,6 +445,9 @@ public class DBReport {
         ObjectContainer db = dbconn.getConnection();
         int carNrInt = Integer.parseInt(carNr);
         Collection<RentCar> res = #{ db.( RentCar where car.nr == carNrInt ) };
+        for (RentCar rc : res) {
+            db.activate(rc, 6);
+        }
         return res;
     }
     
@@ -387,6 +468,9 @@ public class DBReport {
         Date endDate = new Date(end.getTimeInMillis());
         int carNrInt = Integer.parseInt(carNr);
         Collection<Labor> res = #{ db.( unique((RentCar where car.nr == carNrInt and date > beginDate and date.time < endDate.time).labor) ) };
+        for (Labor l : res) {
+            db.activate(l, 6);
+        }
         return res;
     }
     
@@ -406,6 +490,9 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<RentCar> res = #{ db.( RentCar where labor.worksAt.name == companyName and date.time > beginDate.time and date.time < endDate.time ) };
+        for (RentCar rc : res) {
+            db.activate(rc, 6);
+        }
         return res;
     }
     
@@ -424,6 +511,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( ((Labor where worksAt.name == companyName) as l).(l, (TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -442,6 +534,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (unique(Car.manufacturer as m)).(m, count(RentCar where car.manufacturer == m and date.time > beginDate.time and date.time < endDate.time)) ) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -451,6 +548,9 @@ public class DBReport {
     public Collection<TrainingCompany> report24(String productName) {
         ObjectContainer db = dbconn.getConnection();
         Collection<TrainingCompany> res = #{ db.( TrainingCompany as tc where exists (Training where trainingProduct.fullName == productName and trainingCompany == tc) ) };
+        for (TrainingCompany tc : res) {
+            db.activate(tc, 6);
+        }
         return res;
     }
     
@@ -470,6 +570,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (Company as comp).(comp, avg( ((Labor where worksAt == comp) as l).(count(RentCar where labor == l and date.time > beginDate.time and date.time < endDate.time)) ) )) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -488,6 +593,11 @@ public class DBReport {
         Date beginDate = new Date(begin.getTimeInMillis());
         Date endDate = new Date(end.getTimeInMillis());
         Collection<Struct> res = #{ db.( (Company as comp).(comp, avg( ((Labor where worksAt == comp and sex == 'M') as l).(count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ), avg( ((Labor where worksAt == comp and sex == 'F') as l).(count(TrainingAssignment where labor == l and startDate.time > beginDate.time and startDate.time < endDate.time)) ) )) };
+        for (Struct s : res) {
+            for (int i = 0; i < s.size(); i++) {
+                db.activate(s.get(i), 6);
+            }
+        }
         return res;
     }
     
@@ -498,6 +608,9 @@ public class DBReport {
         ObjectContainer db = dbconn.getConnection();
         //Collection<Company> res = #{ db.( (Company where name == compName) close by (partOf) ) };
         Collection<Company> res = #{ db.( (Company where name == compName) ) };
+        for (Company c : res) {
+            db.activate(c, 6);
+        }
         return res;
     }
 
